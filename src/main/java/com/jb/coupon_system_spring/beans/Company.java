@@ -19,7 +19,7 @@ public class Company {
     private String name;
     private String email;
     private String password;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn(name = "company_id")
     @Singular
     private List<Coupon> coupons = new ArrayList<>();

@@ -6,7 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.sql.Date;
+
 
 @Entity
 @Table(name = "coupons")
@@ -25,8 +26,8 @@ public class Coupon {
     private Category category;
     private String title;
     private String description;
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private Date startDate;
+    private Date endDate;
     private int amount;
     private double price;
     private String image;
