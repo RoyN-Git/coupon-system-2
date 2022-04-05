@@ -60,6 +60,7 @@ public class Test1 implements CommandLineRunner {
             Company addTest = companyRepo.getById(1);
             addTest.setCoupons(coupons);
             companyRepo.save(addTest);
+
         }
 
 //        List<Company> companies=companyRepo.findAll();
