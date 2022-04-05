@@ -26,7 +26,6 @@ public class Company {
     @Singular
     @JoinColumn(name = "companyId")
     private List<Coupon> coupons = new ArrayList<>();
-    /*PreDestroy 9586478524*/
 }
 
 
