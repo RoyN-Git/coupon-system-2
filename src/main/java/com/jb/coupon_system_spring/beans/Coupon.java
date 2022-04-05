@@ -1,9 +1,7 @@
 package com.jb.coupon_system_spring.beans;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -19,8 +17,9 @@ public class Coupon {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "company_id")
-    private int companyId;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "company_id",referencedColumnName = "id")
+    private Company companyId;
     @Column(name = "category_id")
     @Enumerated(EnumType.STRING)
     private Category category;

@@ -1,5 +1,6 @@
 package com.jb.coupon_system_spring.beans;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -24,8 +25,11 @@ public class Customer {
     private String email;
     @Column(nullable = false)
     private String password;
-    @JoinTable(name = "customers_vs_coupons")
+    @JoinTable(name = "customers_vs_coupons",
+               joinColumns =@JoinColumn(name = "customer_id"),
+               inverseJoinColumns = @JoinColumn(name = "coupon_id"))
     @Singular
     @ManyToMany(cascade = CascadeType.ALL)
+    @JsonIgnore
     List<Coupon> coupons = new ArrayList<>();
 }

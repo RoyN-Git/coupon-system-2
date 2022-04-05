@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
-@Order(2)
+//@Order(2)
 @RequiredArgsConstructor
 public class Test2 implements CommandLineRunner {
     private final CustomerRepo customerRepo;

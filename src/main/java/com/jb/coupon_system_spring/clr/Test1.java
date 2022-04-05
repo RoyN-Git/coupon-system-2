@@ -23,7 +23,7 @@ import java.util.Optional;
 public class Test1 implements CommandLineRunner {
     private final CompanyRepo companyRepo;
 //    private final CouponRepo couponRepo;
-    private final int ONE_DAY=1000*60*60*24;
+
     @Override
     public void run(String... args) throws Exception {
 
@@ -71,6 +71,9 @@ public class Test1 implements CommandLineRunner {
 //        }
 //        companies=companyRepo.findAll();
 //        TablePrinter.print(companies);
+
+        List<Coupon> couponList=couponRepo.findAll();
+        TablePrinter.print(couponList);
 
     }
 }

@@ -1,5 +1,6 @@
 package com.jb.coupon_system_spring.beans;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -19,10 +20,11 @@ public class Company {
     private String name;
     private String email;
     private String password;
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    @JoinColumn(name = "company_id")
+    @OneToMany(mappedBy = "companyId")
+    @JsonIgnore
     @Singular
     private List<Coupon> coupons = new ArrayList<>();
+
 }
 
 
