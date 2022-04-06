@@ -20,11 +20,14 @@ public class Company {
     private String name;
     private String email;
     private String password;
-    @OneToMany(mappedBy = "companyId")
-    @JsonIgnore
-    @Singular
+    @Singular("coupon")
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name="company_id")
     private List<Coupon> coupons = new ArrayList<>();
 
+//    public void addCoupon(Coupon coupon){
+//        this.coupons.add(coupon);
+//    }
 }
 
 

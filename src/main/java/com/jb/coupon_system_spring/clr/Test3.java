@@ -15,7 +15,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-//@Component
+@Component
 @RequiredArgsConstructor
 @Order(3)
 public class Test3 implements CommandLineRunner {
@@ -25,12 +25,14 @@ public class Test3 implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
+        System.out.println("test 3");
+
         List<Company> companies=companyRepo.findAll();
         List<Coupon> coupons=new ArrayList<>();
         for (int counter = 0; counter < companies.size(); counter++) {
             Coupon coupon= Coupon
                     .builder()
-                    .companyId(companies.get(counter))
+                    .companyId(companies.get(counter).getId())
                     .category(Category.ELECTRICITY)
                     .amount(100)
                     .description("coupon number "+(counter+1))
@@ -41,9 +43,12 @@ public class Test3 implements CommandLineRunner {
                     .image("image")
                     .build();
             coupons.add(coupon);
+            //companies.get(counter).addCoupon(coupon);
         }
+        //companyRepo.saveAll(companies);
         couponRepo.saveAll(coupons);
         TablePrinter.print(couponRepo.findAll());
+        companyRepo.deleteById(1);
 
     }
 }
