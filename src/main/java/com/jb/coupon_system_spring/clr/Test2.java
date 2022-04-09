@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.Optional;
 
-@Component
+//@Component
 //@Order(2)
 @RequiredArgsConstructor
 public class Test2 implements CommandLineRunner {
