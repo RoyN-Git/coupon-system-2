@@ -2,6 +2,8 @@ package com.jb.coupon_system_spring.beans;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.annotation.PreDestroy;
 import javax.persistence.*;
@@ -21,11 +23,15 @@ public class Company {
     private String name;
     private String email;
     private String password;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JsonIgnore
-    @Singular
-    @JoinColumn(name = "companyId")
+    @Singular("coupon")
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name="company_id")
     private List<Coupon> coupons = new ArrayList<>();
+
+//    public void addCoupon(Coupon coupon){
+//        this.coupons.add(coupon);
+//    }
 }
 
 

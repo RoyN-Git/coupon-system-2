@@ -11,15 +11,17 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.Optional;
 
+
+//Creating new customers
 @Component
-//@Order(2)
+@Order(2)
 @RequiredArgsConstructor
 public class Test2 implements CommandLineRunner {
     private final CustomerRepo customerRepo;
 
     @Override
     public void run(String... args) throws Exception {
-        for (int counter = 0; counter <3 ; counter++) {
+        for (int counter = 0; counter <5 ; counter++) {
             Customer customer= Customer
                     .builder()
                     .email("customer"+(counter+1)+"@customer.com")
@@ -32,11 +34,7 @@ public class Test2 implements CommandLineRunner {
         List<Customer> customers =customerRepo.findAll();
         TablePrinter.print(customers);
 
-        Optional<Customer> singleCustomer=customerRepo.findById(1);
-        if(singleCustomer.isPresent()){
-            TablePrinter.print(singleCustomer);
-            customerRepo.deleteById(singleCustomer.get().getId());
-        }
+
         customers =customerRepo.findAll();
         TablePrinter.print(customers);
     }

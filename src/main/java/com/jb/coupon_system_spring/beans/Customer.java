@@ -2,6 +2,8 @@ package com.jb.coupon_system_spring.beans;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -31,5 +33,6 @@ public class Customer {
     @Singular
     @ManyToMany(cascade = CascadeType.ALL)
     @JsonIgnore
+    @OnDelete(action = OnDeleteAction.CASCADE)
     List<Coupon> coupons = new ArrayList<>();
 }
