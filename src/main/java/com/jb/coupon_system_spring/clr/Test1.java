@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+//Creating new companies
 @Component
 @Order(1)
 @RequiredArgsConstructor
@@ -45,7 +46,7 @@ public class Test1 implements CommandLineRunner {
 //            coupons.add(coupon);
 //        }
 
-        for (int counter = 0; counter < 3; counter++) {
+        for (int counter = 0; counter < 5; counter++) {
             Company company = Company
                     .builder()
                     .email("company" + (counter + 1) + "@company.com")

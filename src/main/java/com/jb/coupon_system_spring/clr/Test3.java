@@ -15,6 +15,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+//Creating new coupon for each company
 @Component
 @RequiredArgsConstructor
 @Order(3)
@@ -48,7 +49,7 @@ public class Test3 implements CommandLineRunner {
         //companyRepo.saveAll(companies);
         couponRepo.saveAll(coupons);
         TablePrinter.print(couponRepo.findAll());
-        companyRepo.deleteById(1);
+        //companyRepo.deleteById(1);
 
     }
 }

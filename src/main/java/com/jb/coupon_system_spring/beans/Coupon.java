@@ -20,6 +20,7 @@ public class Coupon {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(name = "company_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private int companyId;
     @Column(name = "category_id")
     @Enumerated(EnumType.STRING)
