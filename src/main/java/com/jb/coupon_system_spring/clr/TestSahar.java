@@ -29,7 +29,7 @@ public class TestSahar implements CommandLineRunner {
 //        System.out.println(companyRepo.existsByEmailAndPassword("company1@company.com","company1"));
 //        TablePrinter.print(companyRepo.findByEmailAndPassword("company1@company.com","company1"));
 
-        TablePrinter.print(companyService.companyLogin("company@company.com","company1"));
+        TablePrinter.print(companyService.companyLogin("company1@company.com","company1"));
 
 
 
