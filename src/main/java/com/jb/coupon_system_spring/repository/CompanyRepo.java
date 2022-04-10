@@ -11,11 +11,8 @@ import java.util.Optional;
 
 public interface CompanyRepo extends JpaRepository<Company,Integer> {
 
-//    @Query( "SELECT a FROM companies a WHERE email = :email and password = :password")
-//    public List<Company> findByEmailAndPassword(
-//            @Param("email") String email,
-//            @Param("password") String password);
-//    Optional<Company> findByEmail(String email);
-    public List<Company> findByEmailAndPassword(String email,String password);
+     boolean existsByEmailAndPassword(String email,String password);
+
+
 
 }

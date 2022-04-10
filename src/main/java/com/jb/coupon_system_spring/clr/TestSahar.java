@@ -17,14 +17,15 @@ import java.util.List;
 @Order(2)
 @RequiredArgsConstructor
 public class TestSahar implements CommandLineRunner {
-    private CouponRepo couponRepo;
-    private CompanyRepo companyRepo;
+    private final CouponRepo couponRepo;
+    private final CompanyRepo companyRepo;
 
     @Override
     public void run(String... args) throws Exception {
 //        List<Company> companies = companyRepo.findByEmailAndPassword("company1@company.com","company1");
 //        System.out.println(companyRepo.findByEmail("company1@company.com").isPresent());
-        TablePrinter.print(companyRepo.findByEmailAndPassword("company1@company.com","company1"));
+        System.out.println(companyRepo.existsByEmailAndPassword("company1@company.com","company1"));
+
 
     }
 }
