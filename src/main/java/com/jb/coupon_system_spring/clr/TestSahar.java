@@ -5,6 +5,7 @@ import com.jb.coupon_system_spring.beans.Company;
 import com.jb.coupon_system_spring.beans.Coupon;
 import com.jb.coupon_system_spring.repository.CompanyRepo;
 import com.jb.coupon_system_spring.repository.CouponRepo;
+import com.jb.coupon_system_spring.service.CompanyService;
 import com.jb.coupon_system_spring.util.TablePrinter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
@@ -19,12 +20,17 @@ import java.util.List;
 public class TestSahar implements CommandLineRunner {
     private final CouponRepo couponRepo;
     private final CompanyRepo companyRepo;
+    private final CompanyService companyService;
 
     @Override
     public void run(String... args) throws Exception {
 //        List<Company> companies = companyRepo.findByEmailAndPassword("company1@company.com","company1");
 //        System.out.println(companyRepo.findByEmail("company1@company.com").isPresent());
-        System.out.println(companyRepo.existsByEmailAndPassword("company1@company.com","company1"));
+//        System.out.println(companyRepo.existsByEmailAndPassword("company1@company.com","company1"));
+//        TablePrinter.print(companyRepo.findByEmailAndPassword("company1@company.com","company1"));
+
+        TablePrinter.print(companyService.companyLogin("company@company.com","company1"));
+
 
 
     }
