@@ -18,7 +18,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class CompanyService implements CompanyServiceInterface{
     private final CompanyRepo companyRepo;
-    //private final CustomerRepo customerRepo;
     private final CouponRepo couponRepo;
     private int companyId=1;//for testing
 
