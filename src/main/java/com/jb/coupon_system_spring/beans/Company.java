@@ -20,7 +20,9 @@ public class Company {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column(unique = true)
     private String name;
+    @Column(unique = true)
     private String email;
     private String password;
     @Singular("coupon")

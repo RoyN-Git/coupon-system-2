@@ -26,7 +26,7 @@ public class Test4 implements CommandLineRunner {
         List<Coupon> coupons=couponRepo.findAll();
         for (Customer customer:customers) {
             for (Coupon coupon:coupons) {
-                customerRepo.addCouponPurchase(customer.getId(),coupon.getId());
+                couponRepo.addCouponPurchase(customer.getId(),coupon.getId());
             }
         }
         Optional<Customer> singleCustomer=customerRepo.findById(1);
@@ -35,7 +35,7 @@ public class Test4 implements CommandLineRunner {
             //customerRepo.deleteById(singleCustomer.get().getId());
         }
 
-        System.out.println(customerRepo.existsByEmailAndPassword("customer2@customer.com","customer2"));
+        //System.out.println(customerRepo.existsByEmailAndPassword("customer2@customer.com","customer2"));
         //System.out.println(customerRepo.existsByEmail("customer2@customer.com"));
 
     }

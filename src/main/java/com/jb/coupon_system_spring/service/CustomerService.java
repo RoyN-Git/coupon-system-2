@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class CouponSystemService {
+public class CustomerService {
     private final CompanyRepo companyRepo;
     private final CustomerRepo customerRepo;
     private final CouponRepo couponRepo;

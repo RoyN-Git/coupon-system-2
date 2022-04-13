@@ -23,13 +23,14 @@ public class Customer {
     private String firstName;
     @Column(name = "last_name", nullable = false)
     private String lastName;
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
     @Column(nullable = false)
     private String password;
     @JoinTable(name = "customers_vs_coupons",
                joinColumns =@JoinColumn(name = "customer_id"),
-               inverseJoinColumns = @JoinColumn(name = "coupon_id"))
+               inverseJoinColumns = @JoinColumn(name = "coupon_id"),
+               uniqueConstraints = {@UniqueConstraint(columnNames = {"customer_id","coupon_id"})})
     @Singular
     @ManyToMany(cascade = CascadeType.ALL)
     @JsonIgnore

@@ -10,7 +10,7 @@ import java.sql.Date;
 
 
 @Entity
-@Table(name = "coupons")
+@Table(name = "coupons",uniqueConstraints ={ @UniqueConstraint(columnNames = {"company_id","title"})})
 @Builder
 @Data
 @NoArgsConstructor
@@ -20,7 +20,7 @@ public class Coupon {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(name = "company_id")
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    //@OnDelete(action = OnDeleteAction.CASCADE)
     private int companyId;
     @Column(name = "category_id")
     @Enumerated(EnumType.STRING)

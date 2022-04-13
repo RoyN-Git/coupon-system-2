@@ -9,9 +9,12 @@ import com.jb.coupon_system_spring.util.TablePrinter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Component;
 
 import java.sql.Date;
+import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,6 +49,38 @@ public class Test3 implements CommandLineRunner {
             coupons.add(coupon);
             //companies.get(counter).addCoupon(coupon);
         }
+//        Coupon coupon1= Coupon
+//                .builder()
+//                .companyId(companies.get(1).getId())
+//                .category(Category.ELECTRICITY)
+//                .amount(100)
+//                .description("try to make double")
+//                .title("coupon title 1")
+//                .price(Math.random()*100+1)
+//                .startDate(new Date(System.currentTimeMillis()))
+//                .endDate(new Date(System.currentTimeMillis()+(int)(Math.random()*7+1)*ONE_DAY))
+//                .image("image")
+//                .build();
+//        Coupon coupon2= Coupon
+//                .builder()
+//                .companyId(companies.get(1).getId())
+//                .category(Category.ELECTRICITY)
+//                .amount(100)
+//                .description("try to make double")
+//                .title("coupon title 1")
+//                .price(Math.random()*100+1)
+//                .startDate(new Date(System.currentTimeMillis()))
+//                .endDate(new Date(System.currentTimeMillis()+(int)(Math.random()*7+1)*ONE_DAY))
+//                .image("image")
+//                .build();
+//
+//        try {
+//            coupons.add(coupon1);
+//            coupons.add(coupon2);
+//        }catch (DataIntegrityViolationException e){
+//            System.out.println(e.getMessage());
+//        }
+
         //companyRepo.saveAll(companies);
         couponRepo.saveAll(coupons);
         TablePrinter.print(couponRepo.findAll());
