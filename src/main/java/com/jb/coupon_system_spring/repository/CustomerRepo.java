@@ -7,11 +7,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 public interface CustomerRepo extends JpaRepository<Customer,Integer> {
-    @Transactional
-    @Modifying
-    @Query(value = "INSERT INTO customers_vs_coupons (customer_id, coupon_id) values (?1, ?2)", nativeQuery = true)
-    void addCouponPurchase(int customerId, int couponId);
+
     //boolean existsByEmail(String email);
-    boolean existsByEmailAndPassword(String email, String password);
+    Optional<Customer> findByEmailAndPassword(String email, String password);
 }

@@ -1,6 +1,5 @@
 package com.jb.coupon_system_spring.service;
 
-import com.jb.coupon_system_spring.beans.Coupon;
 import com.jb.coupon_system_spring.repository.CompanyRepo;
 import com.jb.coupon_system_spring.repository.CouponRepo;
 import com.jb.coupon_system_spring.repository.CustomerRepo;
@@ -9,10 +8,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class CompanyService {
-    private final CompanyRepo companyRepo;
-    private final CustomerRepo customerRepo;
-    private final CouponRepo couponRepo;
-
-
+public class AdminService {
+        private final CompanyRepo companyRepo;
+        private final CustomerRepo customerRepo;
+        private final CouponRepo couponRepo;
 }
