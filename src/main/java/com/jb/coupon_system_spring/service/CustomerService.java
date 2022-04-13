@@ -6,7 +6,9 @@ import com.jb.coupon_system_spring.beans.Customer;
 import com.jb.coupon_system_spring.repository.CompanyRepo;
 import com.jb.coupon_system_spring.repository.CouponRepo;
 import com.jb.coupon_system_spring.repository.CustomerRepo;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,6 +16,8 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Setter
+@Getter
 public class CustomerService implements CustomerServiceInterFace {
     private final CompanyRepo companyRepo;
     private final CustomerRepo customerRepo;
@@ -28,8 +32,7 @@ public class CustomerService implements CustomerServiceInterFace {
 
     @Override
     public List<Coupon> getCustomerCoupon() {
-
-        return null;
+        return couponRepo.findCouponsByCustomerId(customerId);
     }
 
     @Override
@@ -39,7 +42,7 @@ public class CustomerService implements CustomerServiceInterFace {
 
     @Override
     public List<Coupon> getCustomerCouponByPrice(double price) {
-        return null;
+        return couponRepo.findCouponsByCustomerIdUpToPrice(customerId,price);
     }
 
     @Override
