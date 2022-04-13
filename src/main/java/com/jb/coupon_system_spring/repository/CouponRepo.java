@@ -6,9 +6,15 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 public interface CouponRepo extends JpaRepository<Coupon,Integer> {
     @Transactional
     @Modifying
     @Query(value = "INSERT INTO customers_vs_coupons (customer_id, coupon_id) values (?1, ?2)", nativeQuery = true)
     void addCouponPurchase(int customerId, int couponId);
+
+    List<Coupon> findByCompanyIdAndCategory(int companyId,int categoryId);
+    List<Coupon> findByCompanyId(int companyId);
+    List<Coupon> findByCompanyIdAndPriceLessThanEqual(int companyId,double price);
 }
