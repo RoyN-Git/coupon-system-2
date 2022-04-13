@@ -21,7 +21,7 @@ import java.util.List;
 public class Test6 implements CommandLineRunner {
     private final int ONE_DAY=1000*60*60*24;
     private final CompanyService companyService;
-    private final CouponRepo couponRepo;
+    //private final CouponRepo couponRepo;
     @Override
     public void run(String... args) throws Exception {
         List<Coupon> couponList;
@@ -39,6 +39,6 @@ public class Test6 implements CommandLineRunner {
                 .image("image")
                 .build());
 
-        couponRepo.addCouponPurchase(1,6);
+        //couponRepo.addCouponPurchase(1,6);
     }
 }

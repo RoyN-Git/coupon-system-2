@@ -26,8 +26,7 @@ public class CustomerService implements CustomerServiceInterFace {
     private int customerId = 1; // for testing
 
     @Override
-    public void purchaseCoupon(Coupon coupon) {
-
+    public void purchaseCoupon(Coupon coupon) {couponRepo.addCouponPurchase(customerId,coupon.getId());
     }
 
     @Override
@@ -37,7 +36,7 @@ public class CustomerService implements CustomerServiceInterFace {
 
     @Override
     public List<Coupon> getCustomerCouponByCategory(Category category) {
-        return null;
+        return couponRepo.findCouponsByCustomerIdAndCategory(customerId,category);
     }
 
     @Override
