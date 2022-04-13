@@ -25,25 +25,25 @@ public class Test3 implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        List<Company> companies=companyRepo.findAll();
-        List<Coupon> coupons=new ArrayList<>();
-        for (int counter = 0; counter < companies.size(); counter++) {
-            Coupon coupon= Coupon
-                    .builder()
-                    .companyId(companies.get(counter))
-                    .category(Category.ELECTRICITY)
-                    .amount(100)
-                    .description("coupon number "+(counter+1))
-                    .title("coupon title "+(counter+1))
-                    .price(Math.random()*100+1)
-                    .startDate(new Date(System.currentTimeMillis()))
-                    .endDate(new Date(System.currentTimeMillis()+(int)(Math.random()*7+1)*ONE_DAY))
-                    .image("image")
-                    .build();
-            coupons.add(coupon);
-        }
-        couponRepo.saveAll(coupons);
-        TablePrinter.print(couponRepo.findAll());
+//        List<Company> companies=companyRepo.findAll();
+//        List<Coupon> coupons=new ArrayList<>();
+//        for (int counter = 0; counter < companies.size(); counter++) {
+//            Coupon coupon= Coupon
+//                    .builder()
+//                    .companyId(companies.get(counter))
+//                    .category(Category.ELECTRICITY)
+//                    .amount(100)
+//                    .description("coupon number "+(counter+1))
+//                    .title("coupon title "+(counter+1))
+//                    .price(Math.random()*100+1)
+//                    .startDate(new Date(System.currentTimeMillis()))
+//                    .endDate(new Date(System.currentTimeMillis()+(int)(Math.random()*7+1)*ONE_DAY))
+//                    .image("image")
+//                    .build();
+//            coupons.add(coupon);
+//        }
+//        couponRepo.saveAll(coupons);
+//        TablePrinter.print(couponRepo.findAll());
 
     }
 }
