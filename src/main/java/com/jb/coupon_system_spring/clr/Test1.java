@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+//Creating new companies
 @Component
 @Order(1)
 @RequiredArgsConstructor
@@ -28,24 +29,24 @@ public class Test1 implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        List<Coupon> coupons = new ArrayList<>();
-        for (int counter = 0; counter < 3; counter++) {
-            Coupon coupon = Coupon
-                    .builder()
-                    .category(Category.ELECTRICITY)
-                    .amount(100)
-                    //.companyId(1)
-                    .description("coupon number " + (counter + 1))
-                    .title("coupon title " + (counter + 1))
-                    .price(Math.random() * 100 + 1)
-                    .startDate(new Date(System.currentTimeMillis()))
-                    .endDate(new Date(System.currentTimeMillis() + (int) (Math.random() * 7 + 1) * ONE_DAY))
-                    .image("image")
-                    .build();
-            coupons.add(coupon);
-        }
+//        List<Coupon> coupons = new ArrayList<>();
+//        for (int counter = 0; counter < 3; counter++) {
+//            Coupon coupon = Coupon
+//                    .builder()
+//                    .category(Category.ELECTRICITY)
+//                    .amount(100)
+//                    //.companyId(1)
+//                    .description("coupon number " + (counter + 1))
+//                    .title("coupon title " + (counter + 1))
+//                    .price(Math.random() * 100 + 1)
+//                    .startDate(new Date(System.currentTimeMillis()))
+//                    .endDate(new Date(System.currentTimeMillis() + (int) (Math.random() * 7 + 1) * ONE_DAY))
+//                    .image("image")
+//                    .build();
+//            coupons.add(coupon);
+//        }
 
-        for (int counter = 0; counter < 3; counter++) {
+        for (int counter = 0; counter < 5; counter++) {
             Company company = Company
                     .builder()
                     .email("company" + (counter + 1) + "@company.com")
@@ -55,13 +56,13 @@ public class Test1 implements CommandLineRunner {
             companyRepo.save(company);
         }
 
-        Optional<Company> singleCompany = companyRepo.findById(1);
-        if (singleCompany.isPresent()) {
-            Company addTest = companyRepo.getById(1);
-            addTest.setCoupons(coupons);
-            companyRepo.save(addTest);
-
-        }
+//        Optional<Company> singleCompany = companyRepo.findById(1);
+//        if (singleCompany.isPresent()) {
+//            Company addTest = companyRepo.getById(1);
+//            addTest.setCoupons(coupons);
+//            companyRepo.save(addTest);
+//
+//        }
 
 //        List<Company> companies=companyRepo.findAll();
 //        TablePrinter.print(companies);
