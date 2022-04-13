@@ -7,8 +7,11 @@ import com.jb.coupon_system_spring.exceptions.CompanyExceptions;
 import com.jb.coupon_system_spring.repository.CompanyRepo;
 import com.jb.coupon_system_spring.repository.CouponRepo;
 import com.jb.coupon_system_spring.repository.CustomerRepo;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.yaml.snakeyaml.constructor.SafeConstructor;
 
 import java.util.List;
@@ -16,7 +19,10 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Setter
+@Getter
 public class CompanyService implements CompanyServiceInterface{
+
     private final CompanyRepo companyRepo;
     private final CouponRepo couponRepo;
     private int companyId=1;//for testing
@@ -62,7 +68,7 @@ public class CompanyService implements CompanyServiceInterface{
         if(couponRepo.existsById(couponId)) {
             couponRepo.deleteById(couponId);
         }else{
-            //todo:add coupon exception
+            System.out.println("no coupon");
         }
     }
 
