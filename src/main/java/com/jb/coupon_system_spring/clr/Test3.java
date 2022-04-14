@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 //Creating new coupon for each company
-@Component
+//@Component
 @RequiredArgsConstructor
 @Order(3)
 public class Test3 implements CommandLineRunner {

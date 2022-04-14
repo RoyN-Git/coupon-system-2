@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 import java.sql.Date;
 import java.util.List;
 
-@Component
+//@Component
 @Order(6)
 @RequiredArgsConstructor
 public class Test6 implements CommandLineRunner {

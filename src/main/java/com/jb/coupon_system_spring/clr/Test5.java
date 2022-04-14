@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 //Testing admin service
-@Component
+//@Component
 @Order(5)
 @RequiredArgsConstructor
 public class Test5 implements CommandLineRunner {

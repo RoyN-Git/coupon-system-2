@@ -25,7 +25,7 @@ public class CompanyService implements CompanyServiceInterface{
 
     private final CompanyRepo companyRepo;
     private final CouponRepo couponRepo;
-    private int companyId=1;//for testing
+    private int companyId=1;// todo: take care
 
 
     @Override
@@ -54,9 +54,14 @@ public class CompanyService implements CompanyServiceInterface{
     }
 
     @Override
-    public void updateCoupon(Coupon coupon) throws CompanyExceptions {
+    public void updateCoupon(Coupon coupon) throws CompanyExceptions {  // todo: add if for checking if the coupon is exist
         if(companyRepo.existsById(coupon.getCompanyId())){
-            couponRepo.save(coupon);
+            if (couponRepo.existsById(coupon.getId())) {
+                couponRepo.save(coupon);
+            }
+            else {
+                throw new CompanyExceptions("coupon not exists");
+            }
         }else{
             throw new CompanyExceptions("company no exists");
         }

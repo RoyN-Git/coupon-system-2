@@ -23,7 +23,7 @@ public class CustomerService implements CustomerServiceInterFace {
     private final CustomerRepo customerRepo;
     private final CouponRepo couponRepo;
 
-    private int customerId = 1; // for testing
+    private int customerId = 1; // todo: take care
 
     @Override
     public void purchaseCoupon(Coupon coupon) {couponRepo.addCouponPurchase(customerId,coupon.getId());
