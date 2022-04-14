@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 //Creating new companies
-@Component
+//@Component
 @Order(1)
 @RequiredArgsConstructor
 public class Test1 implements CommandLineRunner {
