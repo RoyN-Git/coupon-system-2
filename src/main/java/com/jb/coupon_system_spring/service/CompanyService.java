@@ -84,7 +84,7 @@ public class CompanyService implements CompanyServiceInterface{
 
     @Override
     public List<Coupon> allCompanyCouponsByCategory(Category category) {
-        return couponRepo.findByCompanyIdAndCategory(this.companyId,category.ordinal()+1);
+        return couponRepo.findByCompanyIdAndCategory(this.companyId,category);
     }
 
     @Override
@@ -93,9 +93,12 @@ public class CompanyService implements CompanyServiceInterface{
     }
 
     @Override
-    public Company companyDetails(int id) {
-        Optional<Company> company=companyRepo.findById(id);
-        //todo: add exception
-        return company.orElse(null);
+    public Company companyDetails() throws CompanyExceptions {
+        Optional<Company> company=companyRepo.findById(this.companyId);
+        if(company.isPresent()){
+            return company.get();
+        }else{
+            throw new CompanyExceptions("no company");
+        }
     }
 }

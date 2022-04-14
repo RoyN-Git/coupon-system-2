@@ -13,7 +13,7 @@ import java.util.Optional;
 
 
 //Creating new customers
-//@Component
+@Component
 @Order(2)
 @RequiredArgsConstructor
 public class Test2 implements CommandLineRunner {

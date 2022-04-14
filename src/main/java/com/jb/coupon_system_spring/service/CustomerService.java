@@ -3,6 +3,8 @@ package com.jb.coupon_system_spring.service;
 import com.jb.coupon_system_spring.beans.Category;
 import com.jb.coupon_system_spring.beans.Coupon;
 import com.jb.coupon_system_spring.beans.Customer;
+import com.jb.coupon_system_spring.exceptions.CouponException;
+import com.jb.coupon_system_spring.exceptions.CustomerException;
 import com.jb.coupon_system_spring.repository.CompanyRepo;
 import com.jb.coupon_system_spring.repository.CouponRepo;
 import com.jb.coupon_system_spring.repository.CustomerRepo;
@@ -11,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,10 +26,20 @@ public class CustomerService implements CustomerServiceInterFace {
     private final CustomerRepo customerRepo;
     private final CouponRepo couponRepo;
 
-    private int customerId = 1; // todo: take care
+    private int customerId = 0; // todo: take care
+    private List<Coupon> couponsToPurchase;
 
     @Override
-    public void purchaseCoupon(Coupon coupon) {couponRepo.addCouponPurchase(customerId,coupon.getId());
+    public void purchaseCoupon(Coupon coupon) throws CouponException {
+        if(coupon.getAmount()==0){
+            throw new CouponException("coupon amount is 0");
+        }
+        if(coupon.getEndDate().before(new Date(System.currentTimeMillis()))){
+            throw new CouponException("expired coupon");
+        }
+        couponRepo.addCouponPurchase(customerId,coupon.getId());
+        coupon.setAmount(coupon.getAmount()-1);
+        couponRepo.save(coupon);
     }
 
     @Override
@@ -45,14 +58,13 @@ public class CustomerService implements CustomerServiceInterFace {
     }
 
     @Override
-    public Customer getCustomerDetails(int id) {
-        Optional<Customer> customer = customerRepo.findById(id);
+    public Customer getCustomerDetails() throws CustomerException {
+        Optional<Customer> customer = customerRepo.findById(this.customerId);
         if (customer.isPresent()){
             return customer.get();
         }
         else {
-            System.out.println("no customer!");
-            return null;
+            throw new CustomerException("no customer");
         }
     }
 }
