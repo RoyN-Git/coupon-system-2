@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 //Testing admin service
-//@Component
+@Component
 @Order(5)
 @RequiredArgsConstructor
 public class Test5 implements CommandLineRunner {
@@ -46,9 +46,9 @@ public class Test5 implements CommandLineRunner {
                 .lastName("customer")
                 .build());
         List<Customer> customersFromAdmin=adminService.getAllCustomers();
-        TablePrinter.print(customersFromAdmin);
+        //TablePrinter.print(customersFromAdmin);
         Customer singleCustomer=adminService.getCustomerById(6);
-        TablePrinter.print(singleCustomer);
+        //TablePrinter.print(singleCustomer);
         singleCustomer.setFirstName("change");
         adminService.updateCustomer(singleCustomer);
         //adminService.deleteCustomer(6);

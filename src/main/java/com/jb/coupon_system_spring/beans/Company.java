@@ -31,9 +31,10 @@ public class Company {
     @JoinColumn(name="company_id")
     private List<Coupon> coupons = new ArrayList<>();
 
-//    public void addCoupon(Coupon coupon){
-//        this.coupons.add(coupon);
-//    }
+
+    public void setId(int id) {}
+
+    public void setName(String name) {}
 }
 
 

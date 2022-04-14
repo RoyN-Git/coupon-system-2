@@ -15,6 +15,6 @@ public interface CompanyServiceInterface {
     public List<Coupon> allCompanyCoupons();
     public List<Coupon> allCompanyCouponsByCategory(Category category);
     public List<Coupon> allCompanyCouponsByPrice(double price);
-    public Company companyDetails(int id);
+    public Company companyDetails() throws CompanyExceptions;
 
 }

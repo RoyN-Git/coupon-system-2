@@ -16,7 +16,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
+//@Component
 @Order(2)
 @RequiredArgsConstructor
 public class CompanyTest implements CommandLineRunner {
@@ -28,6 +28,7 @@ public class CompanyTest implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         Company company = adminService.getCompanyById(1);
+        companyService.setCompanyId(company.getId());
         addCoupons(company);
         updateCoupon();
         deleteCoupon();
@@ -71,19 +72,23 @@ public class CompanyTest implements CommandLineRunner {
         System.out.println("all coupons :");
         TablePrinter.print(companyService.allCompanyCoupons());
         System.out.println("all coupons by category");
-//        TablePrinter.print(companyService.allCompanyCouponsByCategory(Category.FOOD));  // todo: solve the problem with the enum
+        TablePrinter.print(companyService.allCompanyCouponsByCategory(Category.ELECTRICITY));
         System.out.println("all coupons by price ");
         TablePrinter.print(companyService.allCompanyCouponsByPrice(50));
 
     }
 
     public void companyDetails(){
-        TablePrinter.print(companyService.companyDetails(1));
+//        try {
+//            TablePrinter.print(companyService.companyDetails());
+//        } catch (CompanyExceptions e) {
+//            throw new RuntimeException(e);
+//        }
     }
 
     public void exceptions() throws CompanyExceptions {
 //        companyService.deleteCoupon(9);  // todo: take care of the exception
-        TablePrinter.print(companyService.companyDetails(9)); // problem with the company id
+        TablePrinter.print(companyService.companyDetails()); // problem with the company id
 
 
         Coupon coupon= Coupon

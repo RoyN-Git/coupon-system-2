@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 //Creating new coupon for each company
-//@Component
+@Component
 @RequiredArgsConstructor
 @Order(3)
 public class Test3 implements CommandLineRunner {
@@ -41,6 +41,19 @@ public class Test3 implements CommandLineRunner {
                     .amount(100)
                     .description("coupon number "+(counter+1))
                     .title("coupon title "+(counter+1))
+                    .price(Math.random()*100+1)
+                    .startDate(new Date(System.currentTimeMillis()))
+                    .endDate(new Date(System.currentTimeMillis()+(int)(Math.random()*7+1)*ONE_DAY))
+                    .image("image")
+                    .build();
+            coupons.add(coupon);
+            coupon= Coupon
+                    .builder()
+                    .companyId(companies.get(counter).getId())
+                    .category(Category.FOOD)
+                    .amount(100)
+                    .description("coupon number "+(counter+1))
+                    .title("coupon "+(counter+1))
                     .price(Math.random()*100+1)
                     .startDate(new Date(System.currentTimeMillis()))
                     .endDate(new Date(System.currentTimeMillis()+(int)(Math.random()*7+1)*ONE_DAY))

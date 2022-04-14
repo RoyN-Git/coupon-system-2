@@ -36,4 +36,6 @@ public class Customer {
     @JsonIgnore
     @OnDelete(action = OnDeleteAction.CASCADE)
     List<Coupon> coupons = new ArrayList<>();
+
+    public void setId(int id) {}
 }
