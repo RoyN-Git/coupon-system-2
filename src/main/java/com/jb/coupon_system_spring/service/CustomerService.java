@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -49,7 +50,10 @@ public class CustomerService implements CustomerServiceInterFace {
 
     @Override
     public List<Coupon> getCustomerCouponByCategory(Category category) {
-        return couponRepo.findCouponsByCustomerIdAndCategory(customerId,category);
+        //return couponRepo.findCouponsByCustomerIdAndCategory(customerId,category);
+        return getCustomerCoupon().stream()
+                .filter(coupon -> coupon.getCategory().equals(category))
+                .collect(Collectors.toList());
     }
 
     @Override

@@ -31,8 +31,8 @@ public class Test7 implements CommandLineRunner {
         couponList = customerService.getCustomerCoupon();
         TablePrinter.print(couponList);
 
-//        couponList=customerService.getCustomerCouponByCategory(Category.ELECTRICITY);
-//        TablePrinter.print(couponList);
+        couponList = customerService.getCustomerCouponByCategory(Category.ELECTRICITY);
+        TablePrinter.print(couponList);
 
 
 //        couponList=couponRepo.findAllByCategory(Category.ELECTRICITY);
