@@ -34,7 +34,7 @@ public class Company {
 
     public void setId(int id) {}
 
-    public void setName(String name) {}
+//    public void setName(String name) {}
 }
 
 
