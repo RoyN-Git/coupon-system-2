@@ -28,11 +28,11 @@ public class AdminService implements AdminServiceInterface {
     }
 
     @Override
-    public void updateCompany(Company company) /*throws CompanyExceptions*/ {
+    public void updateCompany(Company company) throws AdminException /*throws CompanyExceptions*/ {
         if (companyRepo.existsById(company.getId())) {
             companyRepo.save(company);
         } else {
-            //throw new CompanyExceptions("no company");
+            throw new AdminException("no company");
         }
     }
 

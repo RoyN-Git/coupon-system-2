@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface AdminServiceInterface {
     void addCompany(Company company);
-    void updateCompany(Company company) throws CompanyExceptions;
+    void updateCompany(Company company) throws CompanyExceptions, AdminException;
     void deleteCompany(int companyId) throws CompanyExceptions, AdminException;
     List<Company> getAllCompanies();
     Company getCompanyById(int companyId) throws AdminException;
