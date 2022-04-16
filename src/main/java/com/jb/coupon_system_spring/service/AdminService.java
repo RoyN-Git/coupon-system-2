@@ -28,7 +28,7 @@ public class AdminService implements AdminServiceInterface {
     }
 
     @Override
-    public void updateCompany(Company company) throws AdminException /*throws CompanyExceptions*/ {
+    public void updateCompany(Company company) throws AdminException {
         if (companyRepo.existsById(company.getId())) {
             companyRepo.save(company);
         } else {
@@ -37,7 +37,7 @@ public class AdminService implements AdminServiceInterface {
     }
 
     @Override
-    public void deleteCompany(int companyId) throws AdminException /*throws CompanyExceptions*/ {
+    public void deleteCompany(int companyId) throws AdminException {
         if (companyRepo.existsById(companyId)) {
             for (Coupon coupon : getCompanyById(companyId).getCoupons()) {
                 couponRepo.deleteCouponPurchase(coupon.getId());
@@ -46,7 +46,6 @@ public class AdminService implements AdminServiceInterface {
             companyRepo.deleteById(companyId);
         } else {
             throw new AdminException("no company");
-//            System.out.println("no company");
         }
     }
 
@@ -71,21 +70,21 @@ public class AdminService implements AdminServiceInterface {
     }
 
     @Override
-    public void updateCustomer(Customer customer) {
+    public void updateCustomer(Customer customer) throws AdminException {
         if (customerRepo.existsById(customer.getId())) {
             customerRepo.save(customer);
         } else {
-            System.out.println("no customer");
+            throw new AdminException("no customer");
         }
     }
 
     @Override
-    public void deleteCustomer(int customerId) {
+    public void deleteCustomer(int customerId) throws AdminException {
         if (customerRepo.existsById(customerId)) {
             couponRepo.deleteCouponPurchaseByCustomerId(customerId);
             customerRepo.deleteById(customerId);
         } else {
-            System.out.println("no customer");
+            throw new AdminException("no customer");
         }
     }
 
