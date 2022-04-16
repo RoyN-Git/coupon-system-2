@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 //making each customer by every coupon
-@Component
+//@Component
 @RequiredArgsConstructor
 @Order(4)
 public class Test4 implements CommandLineRunner {

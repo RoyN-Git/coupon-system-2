@@ -1,4 +1,4 @@
-package com.jb.coupon_system_spring.saharTest;
+package com.jb.coupon_system_spring.clr.saharTest;
 
 import com.jb.coupon_system_spring.beans.Category;
 import com.jb.coupon_system_spring.beans.Company;
