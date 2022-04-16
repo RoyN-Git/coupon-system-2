@@ -3,6 +3,7 @@ package com.jb.coupon_system_spring.service;
 import com.jb.coupon_system_spring.beans.Company;
 import com.jb.coupon_system_spring.beans.Coupon;
 import com.jb.coupon_system_spring.beans.Customer;
+import com.jb.coupon_system_spring.exceptions.AdminException;
 import com.jb.coupon_system_spring.exceptions.CompanyExceptions;
 import com.jb.coupon_system_spring.repository.CompanyRepo;
 import com.jb.coupon_system_spring.repository.CouponRepo;
@@ -36,7 +37,7 @@ public class AdminService implements AdminServiceInterface {
     }
 
     @Override
-    public void deleteCompany(int companyId) /*throws CompanyExceptions*/ {
+    public void deleteCompany(int companyId) throws AdminException /*throws CompanyExceptions*/ {
         if (companyRepo.existsById(companyId)) {
             for (Coupon coupon : getCompanyById(companyId).getCoupons()) {
                 couponRepo.deleteCouponPurchase(coupon.getId());
@@ -44,8 +45,8 @@ public class AdminService implements AdminServiceInterface {
             }
             companyRepo.deleteById(companyId);
         } else {
-            //throw new CompanyExceptions("no company");
-            System.out.println("no company");
+            throw new AdminException("no company");
+//            System.out.println("no company");
         }
     }
 
@@ -55,13 +56,12 @@ public class AdminService implements AdminServiceInterface {
     }
 
     @Override
-    public Company getCompanyById(int companyId) {
+    public Company getCompanyById(int companyId) throws AdminException {
         Optional<Company> company = companyRepo.findById(companyId);
         if (company.isPresent()) {
             return company.get();
         } else {
-            System.out.println("no company");
-            return null;
+            throw new AdminException("company not found !");
         }
     }
 
@@ -95,13 +95,12 @@ public class AdminService implements AdminServiceInterface {
     }
 
     @Override
-    public Customer getCustomerById(int customerId) {
+    public Customer getCustomerById(int customerId) throws AdminException {
         Optional<Customer> customer = customerRepo.findById(customerId);
         if (customer.isPresent()) {
             return customer.get();
         } else {
-            System.out.println("no customer");
-            return null;
+            throw new AdminException("Customer not found !");
         }
     }
 }

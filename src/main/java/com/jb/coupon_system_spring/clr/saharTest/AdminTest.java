@@ -1,4 +1,4 @@
-package com.jb.coupon_system_spring.saharTest;
+package com.jb.coupon_system_spring.clr.saharTest;
 
 import com.jb.coupon_system_spring.beans.Company;
 import com.jb.coupon_system_spring.beans.Customer;
@@ -60,13 +60,13 @@ public class AdminTest implements CommandLineRunner {
     }
 
     public void getAndUpdate(){
-        Company company = adminService.getCompanyById(1);
-        company.setPassword("updatepass");
-        adminService.updateCompany(company);
+//        Company company = adminService.getCompanyById(1);
+//        company.setPassword("updatepass");
+//        adminService.updateCompany(company);
     }
 
     public void delete(){
-        adminService.deleteCompany(2);
+//        adminService.deleteCompany(2);
     }
 
     public void showCompanies(){
@@ -103,9 +103,9 @@ public class AdminTest implements CommandLineRunner {
     }
 
     public void getAndUpdateCustomer(){
-        Customer customer = adminService.getCustomerById(3);
-        customer.setPassword("update");
-        adminService.updateCustomer(customer);
+//        Customer customer = adminService.getCustomerById(3);
+//        customer.setPassword("update");
+//        adminService.updateCustomer(customer);
     }
 
     public void deleteCustomer(){
@@ -118,27 +118,27 @@ public class AdminTest implements CommandLineRunner {
 
     public void exceptionsTests(){
 
-        Company company = Company
-                .builder()
-                .email("company" + (1) + "@company.com")
-                .password("company" + (1))
-                .name("company" + (1))
-                .build();
+//        Company company = Company
+//                .builder()
+//                .email("company" + (1) + "@company.com")
+//                .password("company" + (1))
+//                .name("company" + (1))
+//                .build();
+//
+//        adminService.updateCompany(company);
+//        Company company1 = adminService.getCompanyById(9);
+//        adminService.deleteCompany(5);
 
-        adminService.updateCompany(company);
-        Company company1 = adminService.getCompanyById(9);
-        adminService.deleteCompany(5);
-
-        Customer customer= Customer
-                .builder()
-                .email("customer"+(1)+"@customer.com")
-                .password("customer"+(1))
-                .firstName("customer first"+(1))
-                .lastName("customer last"+(1))
-                .build();
-        adminService.updateCustomer(customer);
-        Customer customer1 = adminService.getCustomerById(22);
-        adminService.deleteCustomer(7);
+//        Customer customer= Customer
+//                .builder()
+//                .email("customer"+(1)+"@customer.com")
+//                .password("customer"+(1))
+//                .firstName("customer first"+(1))
+//                .lastName("customer last"+(1))
+//                .build();
+//        adminService.updateCustomer(customer);
+//        Customer customer1 = adminService.getCustomerById(22);
+//        adminService.deleteCustomer(7);
 
     }
 
