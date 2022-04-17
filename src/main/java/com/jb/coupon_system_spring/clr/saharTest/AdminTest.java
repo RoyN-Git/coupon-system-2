@@ -2,6 +2,7 @@ package com.jb.coupon_system_spring.clr.saharTest;
 
 import com.jb.coupon_system_spring.beans.Company;
 import com.jb.coupon_system_spring.beans.Customer;
+import com.jb.coupon_system_spring.exceptions.AdminException;
 import com.jb.coupon_system_spring.service.AdminService;
 import com.jb.coupon_system_spring.util.TablePrinter;
 import lombok.RequiredArgsConstructor;
@@ -108,7 +109,7 @@ public class AdminTest implements CommandLineRunner {
 //        adminService.updateCustomer(customer);
     }
 
-    public void deleteCustomer(){
+    public void deleteCustomer() throws AdminException {
         adminService.deleteCustomer(1);
     }
 

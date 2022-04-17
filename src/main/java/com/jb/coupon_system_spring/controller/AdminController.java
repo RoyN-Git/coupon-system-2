@@ -56,8 +56,20 @@ public class AdminController {
 
     @PutMapping("/customer/update")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public void updateCustomer(@RequestBody Customer customer){
+    public void updateCustomer(@RequestBody Customer customer) throws AdminException {
         adminService.updateCustomer(customer);
+    }
+
+    @DeleteMapping("/company/delete/{id}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public void deleteCompany(@PathVariable int id) throws AdminException {
+        adminService.deleteCompany(id);
+    }
+
+    @DeleteMapping("/customer/delete/{id}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public void deleteCustomer(@PathVariable int id) throws AdminException {
+        adminService.deleteCustomer(id);
     }
 
 }
