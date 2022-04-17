@@ -20,9 +20,9 @@ public class Company {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(unique = true)
+    @Column(unique = true,nullable = false)
     private String name;
-    @Column(unique = true)
+    @Column(unique = true,nullable = false)
     private String email;
     private String password;
     @Singular("coupon")
@@ -31,9 +31,10 @@ public class Company {
     @JoinColumn(name="company_id")
     private List<Coupon> coupons = new ArrayList<>();
 
-//    public void addCoupon(Coupon coupon){
-//        this.coupons.add(coupon);
-//    }
+
+    public void setId(int id) {}
+
+//    public void setName(String name) {}
 }
 
 

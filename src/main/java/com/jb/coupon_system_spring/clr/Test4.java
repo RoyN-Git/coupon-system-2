@@ -4,6 +4,7 @@ import com.jb.coupon_system_spring.beans.Coupon;
 import com.jb.coupon_system_spring.beans.Customer;
 import com.jb.coupon_system_spring.repository.CouponRepo;
 import com.jb.coupon_system_spring.repository.CustomerRepo;
+import com.jb.coupon_system_spring.service.CustomerService;
 import com.jb.coupon_system_spring.util.TablePrinter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
@@ -14,19 +15,22 @@ import java.util.List;
 import java.util.Optional;
 
 //making each customer by every coupon
-@Component
+//@Component
 @RequiredArgsConstructor
 @Order(4)
 public class Test4 implements CommandLineRunner {
     private final CouponRepo couponRepo;
     private final CustomerRepo customerRepo;
+    private final CustomerService customerService;
     @Override
     public void run(String... args) throws Exception {
         List<Customer> customers=customerRepo.findAll();
-        List<Coupon> coupons=couponRepo.findAll();
+        //List<Coupon> coupons=couponRepo.findAll();
         for (Customer customer:customers) {
-            for (Coupon coupon:coupons) {
-                couponRepo.addCouponPurchase(customer.getId(),coupon.getId());
+            customerService.setCustomerId(customer.getId());
+            customerService.setCouponsToPurchase(couponRepo.findAll());
+            for (Coupon coupon:customerService.getCouponsToPurchase()) {
+              customerService.purchaseCoupon(coupon);
             }
         }
         Optional<Customer> singleCustomer=customerRepo.findById(1);

@@ -6,6 +6,7 @@ import com.jb.coupon_system_spring.beans.Coupon;
 import com.jb.coupon_system_spring.repository.CompanyRepo;
 import com.jb.coupon_system_spring.repository.CouponRepo;
 import com.jb.coupon_system_spring.repository.CustomerRepo;
+import com.jb.coupon_system_spring.util.DataEnc;
 import com.jb.coupon_system_spring.util.TablePrinter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
@@ -18,7 +19,7 @@ import java.util.List;
 import java.util.Optional;
 
 //Creating new companies
-@Component
+//@Component
 @Order(1)
 @RequiredArgsConstructor
 public class Test1 implements CommandLineRunner {
@@ -29,54 +30,16 @@ public class Test1 implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-//        List<Coupon> coupons = new ArrayList<>();
-//        for (int counter = 0; counter < 3; counter++) {
-//            Coupon coupon = Coupon
-//                    .builder()
-//                    .category(Category.ELECTRICITY)
-//                    .amount(100)
-//                    //.companyId(1)
-//                    .description("coupon number " + (counter + 1))
-//                    .title("coupon title " + (counter + 1))
-//                    .price(Math.random() * 100 + 1)
-//                    .startDate(new Date(System.currentTimeMillis()))
-//                    .endDate(new Date(System.currentTimeMillis() + (int) (Math.random() * 7 + 1) * ONE_DAY))
-//                    .image("image")
-//                    .build();
-//            coupons.add(coupon);
-//        }
-
         for (int counter = 0; counter < 5; counter++) {
             Company company = Company
                     .builder()
                     .email("company" + (counter + 1) + "@company.com")
+                    //.password(DataEnc.setEncryptor("company" + (counter + 1)))
                     .password("company" + (counter + 1))
                     .name("company" + (counter + 1))
                     .build();
             companyRepo.save(company);
         }
-
-//        Optional<Company> singleCompany = companyRepo.findById(1);
-//        if (singleCompany.isPresent()) {
-//            Company addTest = companyRepo.getById(1);
-//            addTest.setCoupons(coupons);
-//            companyRepo.save(addTest);
-//
-//        }
-
-//        List<Company> companies=companyRepo.findAll();
-//        TablePrinter.print(companies);
-//
-//        Optional<Company> singleCompany=companyRepo.findById(1);
-//        if(singleCompany.isPresent()){
-//            TablePrinter.print(singleCompany);
-//            companyRepo.deleteById(singleCompany.get().getId());
-//        }
-//        companies=companyRepo.findAll();
-//        TablePrinter.print(companies);
-
-//        List<Coupon> couponList = couponRepo.findAll();
-//        TablePrinter.print(couponList);
 
     }
 }

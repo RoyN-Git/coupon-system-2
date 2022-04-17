@@ -7,8 +7,11 @@ import com.jb.coupon_system_spring.exceptions.CompanyExceptions;
 import com.jb.coupon_system_spring.repository.CompanyRepo;
 import com.jb.coupon_system_spring.repository.CouponRepo;
 import com.jb.coupon_system_spring.repository.CustomerRepo;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.yaml.snakeyaml.constructor.SafeConstructor;
 
 import java.util.List;
@@ -16,11 +19,13 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Setter
+@Getter
 public class CompanyService implements CompanyServiceInterface{
+
     private final CompanyRepo companyRepo;
-    //private final CustomerRepo customerRepo;
     private final CouponRepo couponRepo;
-    private int companyId=1;//for testing
+    private int companyId=1;// todo: take care
 
 
     @Override
@@ -49,9 +54,14 @@ public class CompanyService implements CompanyServiceInterface{
     }
 
     @Override
-    public void updateCoupon(Coupon coupon) throws CompanyExceptions {
+    public void updateCoupon(Coupon coupon) throws CompanyExceptions {  // todo: add if for checking if the coupon is exist
         if(companyRepo.existsById(coupon.getCompanyId())){
-            couponRepo.save(coupon);
+            if (couponRepo.existsById(coupon.getId())) {
+                couponRepo.save(coupon);
+            }
+            else {
+                throw new CompanyExceptions("coupon not exists");
+            }
         }else{
             throw new CompanyExceptions("company no exists");
         }
@@ -61,9 +71,10 @@ public class CompanyService implements CompanyServiceInterface{
     @Override
     public void deleteCoupon(int couponId) {
         if(couponRepo.existsById(couponId)) {
+            couponRepo.deleteCouponPurchase(couponId);
             couponRepo.deleteById(couponId);
         }else{
-            //todo:add coupon exception
+            System.out.println("no coupon");
         }
     }
 
@@ -74,7 +85,7 @@ public class CompanyService implements CompanyServiceInterface{
 
     @Override
     public List<Coupon> allCompanyCouponsByCategory(Category category) {
-        return couponRepo.findByCompanyIdAndCategory(this.companyId,category.ordinal()+1);
+        return couponRepo.findByCompanyIdAndCategory(this.companyId,category);
     }
 
     @Override
@@ -83,9 +94,12 @@ public class CompanyService implements CompanyServiceInterface{
     }
 
     @Override
-    public Company companyDetails(int id) {
-        Optional<Company> company=companyRepo.findById(id);
-        //todo: add exception
-        return company.orElse(null);
+    public Company companyDetails() throws CompanyExceptions {
+        Optional<Company> company=companyRepo.findById(this.companyId);
+        if(company.isPresent()){
+            return company.get();
+        }else{
+            throw new CompanyExceptions("no company");
+        }
     }
 }
