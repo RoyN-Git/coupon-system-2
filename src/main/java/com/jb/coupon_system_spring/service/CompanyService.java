@@ -25,7 +25,7 @@ public class CompanyService implements CompanyServiceInterface{
 
     private final CompanyRepo companyRepo;
     private final CouponRepo couponRepo;
-    private int companyId=1;// todo: take care
+    private int companyId=3;// todo: take care
 
 
     @Override
@@ -69,12 +69,12 @@ public class CompanyService implements CompanyServiceInterface{
     }
 
     @Override
-    public void deleteCoupon(int couponId) {
+    public void deleteCoupon(int couponId) throws CompanyExceptions {
         if(couponRepo.existsById(couponId)) {
             couponRepo.deleteCouponPurchase(couponId);
             couponRepo.deleteById(couponId);
         }else{
-            System.out.println("no coupon");
+            throw new CompanyExceptions("Coupon no exists!");
         }
     }
 
