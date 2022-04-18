@@ -30,11 +30,6 @@ public class Company {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name="company_id")
     private List<Coupon> coupons = new ArrayList<>();
-
-
-    public void setId(int id) {}
-
-//    public void setName(String name) {}
 }
 
 
