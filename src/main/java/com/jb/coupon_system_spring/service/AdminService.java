@@ -30,6 +30,9 @@ public class AdminService implements AdminServiceInterface {
     @Override
     public void updateCompany(Company company) throws AdminException {
         if (companyRepo.existsById(company.getId())) {
+            if(!companyRepo.findById(company.getId()).get().getName().equals(company.getName())){
+                throw new AdminException("company name cannot be updated");
+            }
             companyRepo.save(company);
         } else {
             throw new AdminException("no company");

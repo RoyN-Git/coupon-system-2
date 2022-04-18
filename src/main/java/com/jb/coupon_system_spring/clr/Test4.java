@@ -30,7 +30,7 @@ public class Test4 implements CommandLineRunner {
             customerService.setCustomerId(customer.getId());
             customerService.setCouponsToPurchase(couponRepo.findAll());
             for (Coupon coupon:customerService.getCouponsToPurchase()) {
-              customerService.purchaseCoupon(coupon);
+              customerService.purchaseCoupon(coupon.getId());
             }
         }
         Optional<Customer> singleCustomer=customerRepo.findById(1);

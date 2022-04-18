@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CustomerServiceInterFace {
-     void purchaseCoupon(Coupon coupon) throws CouponException;
+     void purchaseCoupon(int couponId) throws CouponException;
      List<Coupon> getCustomerCoupon();
      List<Coupon> getCustomerCouponByCategory(Category category);
      List<Coupon> getCustomerCouponByPrice(double price);
