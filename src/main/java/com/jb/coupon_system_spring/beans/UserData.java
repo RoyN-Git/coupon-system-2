@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserData {
-    private int userId;
     private String userEmail;
     private String userPassword;
     private ClientType userType;
