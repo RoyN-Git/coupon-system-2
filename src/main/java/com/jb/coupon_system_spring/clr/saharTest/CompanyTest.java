@@ -64,7 +64,7 @@ public class CompanyTest implements CommandLineRunner {
         companyService.updateCoupon(coupon);
     }
 
-    public void deleteCoupon(){
+    public void deleteCoupon() throws CompanyExceptions {
         companyService.deleteCoupon(2);
     }
 

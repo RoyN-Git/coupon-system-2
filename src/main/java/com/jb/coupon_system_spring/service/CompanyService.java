@@ -25,28 +25,10 @@ public class CompanyService implements CompanyServiceInterface{
 
     private final CompanyRepo companyRepo;
     private final CouponRepo couponRepo;
-    private int companyId=1;// todo: take care
+    private int companyId=3;// todo: take care
 
 
-    @Override
-    public Company companyLogin(String email, String password) throws CompanyExceptions {
-//        if (companyRepo.existsByEmailAndPassword(email,password)){
-//            return companyRepo.findByEmailAndPassword(email, password);
-//        }
-//        else{
-//            throw new CompanyExceptions("incorrect email or password !");
-//        }
-        /*
-        Optional<Company> company=companyRepo.findByEmailAndPassword(email, password);
-        if(company.isPresent()){
-            return company.get();
-        }else{
-            throw new CompanyExceptions("c");
-        }
 
-         */
-        return null;
-    }
 
     @Override
     public void addCoupon(Coupon coupon) {
@@ -69,12 +51,12 @@ public class CompanyService implements CompanyServiceInterface{
     }
 
     @Override
-    public void deleteCoupon(int couponId) {
+    public void deleteCoupon(int couponId) throws CompanyExceptions {
         if(couponRepo.existsById(couponId)) {
             couponRepo.deleteCouponPurchase(couponId);
             couponRepo.deleteById(couponId);
         }else{
-            System.out.println("no coupon");
+            throw new CompanyExceptions("Coupon no exists!");
         }
     }
 

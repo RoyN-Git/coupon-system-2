@@ -31,16 +31,22 @@ public class CustomerService implements CustomerServiceInterFace {
     private List<Coupon> couponsToPurchase;
 
     @Override
-    public void purchaseCoupon(Coupon coupon) throws CouponException {
-        if(coupon.getAmount()==0){
-            throw new CouponException("coupon amount is 0");
+    public void purchaseCoupon(int couponId) throws CouponException {
+        Optional<Coupon> coupon=couponRepo.findById(couponId);
+        if(coupon.isPresent()) {
+            if (coupon.get().getAmount() == 0) {
+                throw new CouponException("coupon amount is 0");
+            }
+            if (coupon.get().getEndDate().before(new Date(System.currentTimeMillis()))) {
+                throw new CouponException("expired coupon");
+            }
+            couponRepo.addCouponPurchase(customerId, coupon.get().getId());
+            coupon.get().setAmount(coupon.get().getAmount() - 1);
+            couponRepo.save(coupon.get());
+        }else {
+            throw new CouponException("no coupon");
+
         }
-        if(coupon.getEndDate().before(new Date(System.currentTimeMillis()))){
-            throw new CouponException("expired coupon");
-        }
-        couponRepo.addCouponPurchase(customerId,coupon.getId());
-        coupon.setAmount(coupon.getAmount()-1);
-        couponRepo.save(coupon);
     }
 
     @Override

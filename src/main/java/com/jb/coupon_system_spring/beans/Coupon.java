@@ -31,8 +31,4 @@ public class Coupon {
     private int amount;
     private double price;
     private String image;
-
-    public void setId(int id) {}
-
-    public void setCompanyId(int companyId) {}
 }
