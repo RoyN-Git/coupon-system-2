@@ -11,9 +11,9 @@ import java.util.Optional;
 
 public interface CustomerServiceInterFace {
      void purchaseCoupon(int couponId) throws CouponException;
-     List<Coupon> getCustomerCoupon();
-     List<Coupon> getCustomerCouponByCategory(Category category);
-     List<Coupon> getCustomerCouponByPrice(double price);
+     List<Coupon> getCustomerCoupon() throws CustomerException;
+     List<Coupon> getCustomerCouponByCategory(Category category) throws CustomerException;
+     List<Coupon> getCustomerCouponByPrice(double price) throws CustomerException;
      Customer getCustomerDetails() throws CustomerException;
 
 

@@ -23,17 +23,17 @@ public class CustomerController {
     }
 
     @GetMapping("/customerCoupons")
-    public ResponseEntity<?> getCustomerCoupons(){
+    public ResponseEntity<?> getCustomerCoupons() throws CustomerException {
         return new ResponseEntity<>(customerService.getCustomerCoupon(),HttpStatus.ACCEPTED);
     }
 
     @GetMapping("/customerCouponsByCategory/{category}")
-    public ResponseEntity<?> getCustomerCouponsByCategory(@PathVariable Category category){
+    public ResponseEntity<?> getCustomerCouponsByCategory(@PathVariable Category category) throws CustomerException {
         return new ResponseEntity<>(customerService.getCustomerCouponByCategory(category),HttpStatus.ACCEPTED);
     }
 
     @GetMapping("/customerCouponsByPrice/{price}")
-    public ResponseEntity<?> getCustomerCouponsByPrice(@PathVariable double price){
+    public ResponseEntity<?> getCustomerCouponsByPrice(@PathVariable double price) throws CustomerException {
         return new ResponseEntity<>(customerService.getCustomerCouponByPrice(price), HttpStatus.ACCEPTED);
     }
 

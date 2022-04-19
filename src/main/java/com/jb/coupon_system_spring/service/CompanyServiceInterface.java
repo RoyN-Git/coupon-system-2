@@ -11,9 +11,9 @@ public interface CompanyServiceInterface {
     public void addCoupon(Coupon coupon);
     public void updateCoupon(Coupon coupon) throws CompanyExceptions;
     public void deleteCoupon(int couponId) throws CompanyExceptions;
-    public List<Coupon> allCompanyCoupons();
-    public List<Coupon> allCompanyCouponsByCategory(Category category);
-    public List<Coupon> allCompanyCouponsByPrice(double price);
+    public List<Coupon> allCompanyCoupons() throws CompanyExceptions;
+    public List<Coupon> allCompanyCouponsByCategory(Category category) throws CompanyExceptions;
+    public List<Coupon> allCompanyCouponsByPrice(double price) throws CompanyExceptions;
     public Company companyDetails() throws CompanyExceptions;
 
 }

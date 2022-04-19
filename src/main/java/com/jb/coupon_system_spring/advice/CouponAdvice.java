@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class CouponAdvice {
     @ExceptionHandler(value = {CouponException.class})
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
-    public ErrorDetail handleAdminException(Exception e){
+    public ErrorDetail handleCouponException(Exception e){
         return new ErrorDetail("Coupon Error",e.getMessage());
     }
 }

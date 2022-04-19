@@ -69,12 +69,12 @@ public class CompanyTest implements CommandLineRunner {
     }
 
     public void printCoupons(){
-        System.out.println("all coupons :");
-        TablePrinter.print(companyService.allCompanyCoupons());
-        System.out.println("all coupons by category");
-        TablePrinter.print(companyService.allCompanyCouponsByCategory(Category.ELECTRICITY));
-        System.out.println("all coupons by price ");
-        TablePrinter.print(companyService.allCompanyCouponsByPrice(50));
+//        System.out.println("all coupons :");
+//        TablePrinter.print(companyService.allCompanyCoupons());
+//        System.out.println("all coupons by category");
+//        TablePrinter.print(companyService.allCompanyCouponsByCategory(Category.ELECTRICITY));
+//        System.out.println("all coupons by price ");
+//        TablePrinter.print(companyService.allCompanyCouponsByPrice(50));
 
     }
 
