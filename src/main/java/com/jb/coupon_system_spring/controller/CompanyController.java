@@ -39,17 +39,17 @@ public class CompanyController {
     }
 
     @GetMapping("/allCoupons")
-    public ResponseEntity<?> allCoupons(){
+    public ResponseEntity<?> allCoupons() throws CompanyExceptions {
         return new ResponseEntity<>(companyService.allCompanyCoupons(),HttpStatus.OK);
     }
 
     @GetMapping("/couponsByCategory/{category}")
-    public ResponseEntity<?> couponsByCategory(@PathVariable Category category){
+    public ResponseEntity<?> couponsByCategory(@PathVariable Category category) throws CompanyExceptions {
         return new ResponseEntity<>(companyService.allCompanyCouponsByCategory(category),HttpStatus.OK);
     }
 
     @GetMapping("/couponsByPrice/{price}")
-    public ResponseEntity<?> couponsByPrice(@PathVariable double price){
+    public ResponseEntity<?> couponsByPrice(@PathVariable double price) throws CompanyExceptions {
         return new ResponseEntity<>(companyService.allCompanyCouponsByPrice(price),HttpStatus.OK);
     }
 

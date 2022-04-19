@@ -24,20 +24,20 @@ public class Test4 implements CommandLineRunner {
     private final CustomerService customerService;
     @Override
     public void run(String... args) throws Exception {
-        List<Customer> customers=customerRepo.findAll();
-        //List<Coupon> coupons=couponRepo.findAll();
-        for (Customer customer:customers) {
-            customerService.setCustomerId(customer.getId());
-            customerService.setCouponsToPurchase(couponRepo.findAll());
-            for (Coupon coupon:customerService.getCouponsToPurchase()) {
-              customerService.purchaseCoupon(coupon.getId());
-            }
-        }
-        Optional<Customer> singleCustomer=customerRepo.findById(1);
-        if(singleCustomer.isPresent()){
-            TablePrinter.print(singleCustomer);
-            //customerRepo.deleteById(singleCustomer.get().getId());
-        }
+//        List<Customer> customers=customerRepo.findAll();
+//        //List<Coupon> coupons=couponRepo.findAll();
+//        for (Customer customer:customers) {
+//            customerService.setCustomerId(customer.getId());
+//            customerService.setCouponsToPurchase(couponRepo.findAll());
+//            for (Coupon coupon:customerService.getCouponsToPurchase()) {
+//              customerService.purchaseCoupon(coupon.getId());
+//            }
+//        }
+//        Optional<Customer> singleCustomer=customerRepo.findById(1);
+//        if(singleCustomer.isPresent()){
+//            TablePrinter.print(singleCustomer);
+//            //customerRepo.deleteById(singleCustomer.get().getId());
+//        }
 
         //System.out.println(customerRepo.existsByEmailAndPassword("customer2@customer.com","customer2"));
         //System.out.println(customerRepo.existsByEmail("customer2@customer.com"));

@@ -3,11 +3,13 @@ package com.jb.coupon_system_spring.service;
 import com.jb.coupon_system_spring.beans.Company;
 import com.jb.coupon_system_spring.beans.Coupon;
 import com.jb.coupon_system_spring.beans.Customer;
+import com.jb.coupon_system_spring.beans.ErrorTypes;
 import com.jb.coupon_system_spring.exceptions.AdminException;
 import com.jb.coupon_system_spring.exceptions.CompanyExceptions;
 import com.jb.coupon_system_spring.repository.CompanyRepo;
 import com.jb.coupon_system_spring.repository.CouponRepo;
 import com.jb.coupon_system_spring.repository.CustomerRepo;
+import com.jb.coupon_system_spring.util.DataEnc;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +26,7 @@ public class AdminService implements AdminServiceInterface {
 
     @Override
     public void addCompany(Company company) {
+        company.setPassword(DataEnc.setEncryptor(company.getPassword()));
         companyRepo.save(company);
     }
 
@@ -31,11 +34,11 @@ public class AdminService implements AdminServiceInterface {
     public void updateCompany(Company company) throws AdminException {
         if (companyRepo.existsById(company.getId())) {
             if(!companyRepo.findById(company.getId()).get().getName().equals(company.getName())){
-                throw new AdminException("company name cannot be updated");
+                throw new AdminException(ErrorTypes.UNCHANGED_VALUE.getMessage());
             }
             companyRepo.save(company);
         } else {
-            throw new AdminException("no company");
+            throw new AdminException(ErrorTypes.COMPANY_NOT_EXIST.getMessage());
         }
     }
 
@@ -48,7 +51,7 @@ public class AdminService implements AdminServiceInterface {
             }
             companyRepo.deleteById(companyId);
         } else {
-            throw new AdminException("no company");
+            throw new AdminException(ErrorTypes.COMPANY_NOT_EXIST.getMessage());
         }
     }
 
@@ -63,12 +66,13 @@ public class AdminService implements AdminServiceInterface {
         if (company.isPresent()) {
             return company.get();
         } else {
-            throw new AdminException("company not found !");
+            throw new AdminException(ErrorTypes.COMPANY_NOT_EXIST.getMessage());
         }
     }
 
     @Override
     public void addCustomer(Customer customer) {
+        customer.setPassword(DataEnc.setEncryptor(customer.getPassword()));
         customerRepo.save(customer);
     }
 
@@ -77,7 +81,7 @@ public class AdminService implements AdminServiceInterface {
         if (customerRepo.existsById(customer.getId())) {
             customerRepo.save(customer);
         } else {
-            throw new AdminException("no customer");
+            throw new AdminException(ErrorTypes.CUSTOMER_NOT_EXIST.getMessage());
         }
     }
 
@@ -87,7 +91,7 @@ public class AdminService implements AdminServiceInterface {
             couponRepo.deleteCouponPurchaseByCustomerId(customerId);
             customerRepo.deleteById(customerId);
         } else {
-            throw new AdminException("no customer");
+            throw new AdminException(ErrorTypes.CUSTOMER_NOT_EXIST.getMessage());
         }
     }
 
@@ -102,7 +106,7 @@ public class AdminService implements AdminServiceInterface {
         if (customer.isPresent()) {
             return customer.get();
         } else {
-            throw new AdminException("Customer not found !");
+            throw new AdminException(ErrorTypes.CUSTOMER_NOT_EXIST.getMessage());
         }
     }
 }
