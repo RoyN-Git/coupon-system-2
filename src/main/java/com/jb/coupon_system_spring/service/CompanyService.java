@@ -28,25 +28,7 @@ public class CompanyService implements CompanyServiceInterface{
     private int companyId=3;// todo: take care
 
 
-    @Override
-    public Company companyLogin(String email, String password) throws CompanyExceptions {
-//        if (companyRepo.existsByEmailAndPassword(email,password)){
-//            return companyRepo.findByEmailAndPassword(email, password);
-//        }
-//        else{
-//            throw new CompanyExceptions("incorrect email or password !");
-//        }
-        /*
-        Optional<Company> company=companyRepo.findByEmailAndPassword(email, password);
-        if(company.isPresent()){
-            return company.get();
-        }else{
-            throw new CompanyExceptions("c");
-        }
 
-         */
-        return null;
-    }
 
     @Override
     public void addCoupon(Coupon coupon) {
