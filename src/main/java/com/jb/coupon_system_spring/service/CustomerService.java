@@ -27,7 +27,7 @@ public class CustomerService implements CustomerServiceInterFace {
     private final CustomerRepo customerRepo;
     private final CouponRepo couponRepo;
 
-    private int customerId = 0; // todo: take care
+    private int customerId = 2; // todo: take care
     private List<Coupon> couponsToPurchase;
 
     @Override
@@ -43,6 +43,7 @@ public class CustomerService implements CustomerServiceInterFace {
             couponRepo.addCouponPurchase(customerId, coupon.get().getId());
             coupon.get().setAmount(coupon.get().getAmount() - 1);
             couponRepo.save(coupon.get());
+
         }else {
             throw new CouponException("no coupon");
 
