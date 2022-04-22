@@ -3,9 +3,11 @@ package com.jb.coupon_system_spring.service;
 import com.jb.coupon_system_spring.beans.ClientType;
 import com.jb.coupon_system_spring.beans.Company;
 import com.jb.coupon_system_spring.beans.Customer;
+import com.jb.coupon_system_spring.beans.ErrorTypes;
 import com.jb.coupon_system_spring.exceptions.LoginException;
 import com.jb.coupon_system_spring.repository.CompanyRepo;
 import com.jb.coupon_system_spring.repository.CustomerRepo;
+import com.jb.coupon_system_spring.util.DataEnc;
 import com.jb.coupon_system_spring.util.JWT;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,30 +20,34 @@ public class LoginService {
     private final CompanyRepo companyRepo;
     private final CustomerRepo customerRepo;
     private final JWT jwt;
+    public static final String ADMIN_EMAIL="admin@admin.com";
+    public static final String ADMIN_PASSWORD="admin";
 
     public String login(String email, String password, ClientType clientType) throws LoginException {
         switch (clientType) {
             case ADMIN:
-                if (email.equals("admin@admin.com") && password.equals("admin")){
-                return jwt.generateToken(email);
-            }
+                if (email.equals(ADMIN_EMAIL) && password.equals(ADMIN_PASSWORD)) {
+                    return jwt.generateToken(email);
+                } else {
+                    throw new LoginException(ErrorTypes.BAD_LOGIN.getMessage());
+                }
             case COMPANY:
                 Optional<Company> company = companyRepo.findByEmail(email);
-                if (company.isPresent()) {
-                    if (company.get().getPassword().equals(password)) {
-                        return jwt.generateToken(company.get());
-                    }
+                if (company.isPresent() && DataEnc.getEncryptor(company.get().getPassword()).equals(password)) {
+                    return jwt.generateToken(company.get());
+                } else {
+                    throw new LoginException(ErrorTypes.BAD_LOGIN.getMessage());
                 }
             case CUSTOMER:
                 Optional<Customer> customer = customerRepo.findByEmail(email);
-                if (customer.isPresent()) {
-                    if (customer.get().getPassword().equals(password)) {
-                        return jwt.generateToken(customer.get());
-                    }
+                if (customer.isPresent() && DataEnc.getEncryptor(customer.get().getPassword()).equals(password)) {
+                    return jwt.generateToken(customer.get());
+                } else {
+                    throw new LoginException(ErrorTypes.BAD_LOGIN.getMessage());
                 }
+            default:
+                throw new LoginException(ErrorTypes.UNAUTHORIZED_USER.getMessage());
         }
-        throw new LoginException("email or password incorrect");
-
     }
 
 }
