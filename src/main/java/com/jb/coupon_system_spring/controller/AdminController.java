@@ -1,9 +1,14 @@
 package com.jb.coupon_system_spring.controller;
 
+import com.jb.coupon_system_spring.beans.ClientType;
 import com.jb.coupon_system_spring.beans.Company;
 import com.jb.coupon_system_spring.beans.Customer;
+import com.jb.coupon_system_spring.beans.ErrorTypes;
 import com.jb.coupon_system_spring.exceptions.AdminException;
+import com.jb.coupon_system_spring.exceptions.LoginException;
 import com.jb.coupon_system_spring.service.AdminService;
+import com.jb.coupon_system_spring.util.JWT;
+import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,12 +18,22 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/admin")
 @RequiredArgsConstructor
 public class AdminController {
+    private final JWT jwt;
 
     private final AdminService adminService;
 
     @GetMapping("/allCompanies")
-    public ResponseEntity<?> getAllCompanies(){
-        return new ResponseEntity<>(adminService.getAllCompanies(), HttpStatus.OK);
+    public ResponseEntity<?> getAllCompanies(@RequestHeader(name = "Authorization") String token) throws LoginException {
+        String type=jwt.getClientType(token);
+        if(type.equals(ClientType.ADMIN.getName())) {
+            String newToken = jwt.checkUser(token);
+            //return new ResponseEntity<>(adminService.getAllCompanies(), HttpStatus.OK);
+            return ResponseEntity.ok()
+                    .header("Authorization",newToken)
+                    .body(adminService.getAllCompanies());
+        }else{
+            throw new LoginException(ErrorTypes.UNAUTHORIZED_USER.getMessage());
+        }
     }
     @GetMapping("/allCustomers")
     public ResponseEntity<?> getAllCustomers(){
