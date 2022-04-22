@@ -54,7 +54,7 @@ public class JWT {
 
     public String checkUser(String token) throws MalformedJwtException, LoginException {
         Claims claims = extractAllClaims(token.replace("Bearer ", ""));
-        String type = (String) claims.get("client type");
+        String type = (String) claims.get(CLIENT_TYPE);
         if (type.equals(ClientType.ADMIN.getName())) {
             return generateToken(claims.getSubject());
         } else if (type.equals(ClientType.COMPANY.getName())) {
