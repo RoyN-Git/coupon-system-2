@@ -26,7 +26,7 @@ public class CompanyService implements CompanyServiceInterface {
 
     private final CompanyRepo companyRepo;
     private final CouponRepo couponRepo;
-    private int companyId = 3;// todo: take care
+    private int companyId;// todo: take care
 
 
     @Override
@@ -91,7 +91,7 @@ public class CompanyService implements CompanyServiceInterface {
         if (company.isPresent()) {
             return company.get();
         } else {
-            throw new CompanyExceptions(ErrorTypes.COUPON_NOT_EXIST.getMessage());
+            throw new CompanyExceptions(ErrorTypes.COMPANY_NOT_EXIST.getMessage());
         }
     }
 }

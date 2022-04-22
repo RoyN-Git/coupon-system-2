@@ -1,9 +1,13 @@
 package com.jb.coupon_system_spring.controller;
 
 import com.jb.coupon_system_spring.beans.Category;
+import com.jb.coupon_system_spring.beans.ClientType;
 import com.jb.coupon_system_spring.beans.Coupon;
+import com.jb.coupon_system_spring.beans.ErrorTypes;
 import com.jb.coupon_system_spring.exceptions.CompanyExceptions;
+import com.jb.coupon_system_spring.exceptions.LoginException;
 import com.jb.coupon_system_spring.service.CompanyService;
+import com.jb.coupon_system_spring.util.JWT;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,10 +18,21 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class CompanyController {
     private final CompanyService companyService;
+    private final JWT jwt;
 
     @GetMapping("/Details")
-    public ResponseEntity<?> companyDetails() throws CompanyExceptions {
-        return new ResponseEntity<>(companyService.companyDetails(), HttpStatus.OK);
+    public ResponseEntity<?> companyDetails(@RequestHeader(name = "Authorization") String token) throws CompanyExceptions, LoginException {
+        String type= jwt.getClientType(token);
+        if(type.equals(ClientType.COMPANY.getName())) {
+            //return new ResponseEntity<>(companyService.companyDetails(), HttpStatus.OK);
+            companyService.setCompanyId(jwt.getId(token));
+            String newToken = jwt.checkUser(token);
+            return ResponseEntity.ok()
+                    .header("Authorization",newToken)
+                    .body(companyService.companyDetails());
+        }else{
+            throw new LoginException(ErrorTypes.UNAUTHORIZED_USER.getMessage());
+        }
     }
 
     @PostMapping("/addCoupon")
