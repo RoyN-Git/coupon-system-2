@@ -28,7 +28,7 @@ public class CustomerService implements CustomerServiceInterFace {
     private final CustomerRepo customerRepo;
     private final CouponRepo couponRepo;
 
-    private int customerId = 2; // todo: take care
+    private int customerId;
 
 
     @Override

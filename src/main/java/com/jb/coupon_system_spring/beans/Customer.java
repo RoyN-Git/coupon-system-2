@@ -33,7 +33,7 @@ public class Customer {
                uniqueConstraints = {@UniqueConstraint(columnNames = {"customer_id","coupon_id"})})
     @Singular
     @ManyToMany(cascade = CascadeType.ALL)
-    @JsonIgnore
+    //@JsonIgnore
     @OnDelete(action = OnDeleteAction.CASCADE)
     List<Coupon> coupons = new ArrayList<>();
 
