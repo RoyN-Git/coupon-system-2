@@ -8,11 +8,13 @@ import com.jb.coupon_system_spring.exceptions.AdminException;
 import com.jb.coupon_system_spring.exceptions.LoginException;
 import com.jb.coupon_system_spring.service.AdminService;
 import com.jb.coupon_system_spring.util.JWT;
-import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/admin")
@@ -36,31 +38,83 @@ public class AdminController {
         }
     }
     @GetMapping("/allCustomers")
-    public ResponseEntity<?> getAllCustomers(){
-        return new ResponseEntity<>(adminService.getAllCustomers(),HttpStatus.OK);
+    public ResponseEntity<?> getAllCustomers(@RequestHeader(name = "Authorization") String token) throws LoginException{
+        String type = jwt.getClientType(token);
+        if (type.equals(ClientType.ADMIN.getName())){
+            String newToken = jwt.checkUser(token);
+            return ResponseEntity.ok().header("Authorization",newToken)
+                    .body(adminService.getAllCustomers());
+        }
+        else {
+            throw new LoginException(ErrorTypes.UNAUTHORIZED_USER.getMessage());
+        }
+//        return new ResponseEntity<>(adminService.getAllCustomers(),HttpStatus.OK);
     }
 
     @GetMapping("/company/{id}")
-    public ResponseEntity<?> getCompanyById(@PathVariable int id) throws AdminException {
-        return new ResponseEntity<>(adminService.getCompanyById(id),HttpStatus.ACCEPTED);
+    public ResponseEntity<?> getCompanyById(@RequestHeader(name = "Authorization") String token,@PathVariable int id) throws AdminException, LoginException {
+        String type = jwt.getClientType(token);
+        if (type.equals(ClientType.ADMIN.getName())){
+            String newToken = jwt.checkUser(token);
+            return ResponseEntity.ok().
+                    header("Authorization",newToken)
+                    .body(adminService.getCompanyById(id));
+        }
+        else {
+            throw new LoginException(ErrorTypes.UNAUTHORIZED_USER.getMessage());
+        }
+//        return new ResponseEntity<>(adminService.getCompanyById(id),HttpStatus.ACCEPTED);
     }
 
     @GetMapping("/customer/{id}")
-    public ResponseEntity<?> getCustomerById(@PathVariable int id) throws AdminException {
-        return new ResponseEntity<>(adminService.getCustomerById(id),HttpStatus.OK);
+    public ResponseEntity<?> getCustomerById(@RequestHeader(name = "Authorization")String token,@PathVariable int id) throws AdminException, LoginException {
+//        eturn new ResponseEntity<>(adminService.getCustomerById(id),HttpStatus.OK);
+        String type = jwt.getClientType(token);
+        if (type.equals(ClientType.ADMIN.getName())){
+            String newToken = jwt.checkUser(token);
+            return ResponseEntity.ok()
+                    .header("Authorization",newToken)
+                    .body(adminService.getCustomerById(id));
+        }
+        else {
+            throw new LoginException(ErrorTypes.UNAUTHORIZED_USER.getMessage());
+        }
+
     }
 
     @PostMapping("/company/add")
-    public ResponseEntity<?> addCompany(@RequestBody Company company){
-        adminService.addCompany(company);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<?> addCompany(@RequestHeader(name = "Authorization")String token, @RequestBody Company company) throws LoginException {
+        String type = jwt.getClientType(token);
+        if (type.equals(ClientType.ADMIN.getName())){
+//            String newToken = jwt.checkUser(token);
+            Map<String,Object> newToken = new HashMap<>(); // todo: there is a better solution ?
+            newToken.put("Authorization",jwt.checkUser(token));
+            adminService.addCompany(company);
+            return ResponseEntity.ok(newToken);
+
+        }
+        else {
+            throw new LoginException(ErrorTypes.UNAUTHORIZED_USER.getMessage());
+        }
+
 
     }
 
     @PostMapping("/customer/add")
     @ResponseStatus(HttpStatus.CREATED)
-    public void addCustomer(@RequestBody Customer customer){
-        adminService.addCustomer(customer);
+    public ResponseEntity<?> addCustomer(@RequestHeader(name = "Authorization")String token,@RequestBody Customer customer) throws LoginException {
+        String type = jwt.getClientType(token);
+        if (type.equals(ClientType.ADMIN.getName())) {
+//            String newToken = jwt.checkUser(token);
+            Map<String,Object> newToken = new HashMap<>(); // todo: there is a better solution ?
+            newToken.put("Authorization",jwt.checkUser(token));
+            adminService.addCustomer(customer);
+            return ResponseEntity.ok(newToken);
+        }
+        else {
+            throw new LoginException(ErrorTypes.UNAUTHORIZED_USER.getMessage());
+        }
     }
 
     @PutMapping("/company/update")
@@ -77,8 +131,18 @@ public class AdminController {
 
     @DeleteMapping("/company/delete/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public void deleteCompany(@PathVariable int id) throws AdminException {
-        adminService.deleteCompany(id);
+    public ResponseEntity<?> deleteCompany(@RequestHeader(name = "Authorization") String token,@PathVariable int id) throws AdminException, LoginException {
+
+        String type = jwt.getClientType(token);
+        if (type.equals(ClientType.ADMIN.getName())) {
+            Map<String,Object> newToken = new HashMap<>(); // todo: there is a better solution ?
+            newToken.put("Authorization",jwt.checkUser(token));
+            adminService.deleteCompany(id);
+            return ResponseEntity.ok(newToken);
+        }
+        else {
+            throw new LoginException(ErrorTypes.UNAUTHORIZED_USER.getMessage());
+        }
     }
 
     @DeleteMapping("/customer/delete/{id}")
