@@ -119,14 +119,33 @@ public class AdminController {
 
     @PutMapping("/company/update")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public void updateCompany(@RequestBody Company company) throws AdminException {
-        adminService.updateCompany(company);
+    public ResponseEntity<?> updateCompany(@RequestHeader(name = "Authorization") String token,@RequestBody Company company) throws AdminException, LoginException {
+        String type = jwt.getClientType(token);
+        if (type.equals(ClientType.ADMIN.getName())){
+            Map<String,Object> newToken = new HashMap<>();
+            newToken.put("Authorization",jwt.checkUser(token));
+            adminService.updateCompany(company);
+            return ResponseEntity.ok(newToken);
+        }
+        else {
+            throw new LoginException(ErrorTypes.UNAUTHORIZED_USER.getMessage());
+        }
+
     }
 
     @PutMapping("/customer/update")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public void updateCustomer(@RequestBody Customer customer) throws AdminException {
-        adminService.updateCustomer(customer);
+    public ResponseEntity<?> updateCustomer(@RequestHeader(name = "Authorization") String token,@RequestBody Customer customer) throws AdminException, LoginException {
+        String type = jwt.getClientType(token);
+        if (type.equals(ClientType.ADMIN.getName())){
+            Map<String,Object> newToken = new HashMap<>();
+            newToken.put("Authorization",jwt.checkUser(token));
+            adminService.updateCustomer(customer);
+            return ResponseEntity.ok(newToken);
+        }
+        else {
+            throw new LoginException(ErrorTypes.UNAUTHORIZED_USER.getMessage());
+        }
     }
 
     @DeleteMapping("/company/delete/{id}")
@@ -147,8 +166,17 @@ public class AdminController {
 
     @DeleteMapping("/customer/delete/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public void deleteCustomer(@PathVariable int id) throws AdminException {
-        adminService.deleteCustomer(id);
+    public ResponseEntity<?> deleteCustomer(@RequestHeader(name = "Authorization") String token,@PathVariable int id) throws AdminException, LoginException {
+        String type = jwt.getClientType(token);
+        if (type.equals(ClientType.ADMIN.getName())) {
+            Map<String,Object> newToken = new HashMap<>(); // todo: there is a better solution ?
+            newToken.put("Authorization",jwt.checkUser(token));
+            adminService.deleteCustomer(id);
+            return ResponseEntity.ok(newToken);
+        }
+        else {
+            throw new LoginException(ErrorTypes.UNAUTHORIZED_USER.getMessage());
+        }
     }
 
 }
