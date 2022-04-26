@@ -10,6 +10,7 @@ import com.jb.coupon_system_spring.exceptions.LoginException;
 import com.jb.coupon_system_spring.service.CustomerService;
 import com.jb.coupon_system_spring.util.JWT;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,22 +35,19 @@ public class CustomerController {
         if(type.equals(ClientType.CUSTOMER.getName())){
             customerService.setCustomerId(jwt.getId(token));
             String newToken= jwt.checkUser(token);
-            Map<String,String> headers=new HashMap<>();
-            headers.put("Authorization",newToken);
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Authorization", newToken);
             customerService.purchaseCoupon(couponId);
-//            return ResponseEntity.ok()
-//                    .header("Authorization",newToken)
-//                    .body();
             return new ResponseEntity<>(headers,HttpStatus.CREATED);
         }else{
             throw new LoginException(ErrorTypes.UNAUTHORIZED_USER.getMessage());
         }
-        //customerService.purchaseCoupon(couponId);
     }
 
     @GetMapping("/customerCoupons")
-    public ResponseEntity<?> getCustomerCoupons(@RequestHeader(name = "Authorization") String token) throws CustomerException, LoginException {
-        //return new ResponseEntity<>(customerService.getCustomerCoupon(),HttpStatus.ACCEPTED);
+    public ResponseEntity<?> getCustomerCoupons
+            (@RequestHeader(name = "Authorization") String token)
+            throws CustomerException, LoginException {
         String type = jwt.getClientType(token);
         if (type.equals(ClientType.CUSTOMER.getName())) {
             customerService.setCustomerId(jwt.getId(token));
@@ -66,7 +64,6 @@ public class CustomerController {
     public ResponseEntity<?> getCustomerCouponsByCategory
             (@RequestHeader(name = "Authorization") String token,@PathVariable Category category)
             throws CustomerException, LoginException {
-        //return new ResponseEntity<>(customerService.getCustomerCouponByCategory(category), HttpStatus.ACCEPTED);
         String type = jwt.getClientType(token);
         if (type.equals(ClientType.CUSTOMER.getName())) {
             customerService.setCustomerId(jwt.getId(token));
@@ -80,10 +77,9 @@ public class CustomerController {
     }
 
     @GetMapping("/customerCouponsByPrice/{price}")
-    public ResponseEntity<?> getCustomerCouponsByPrice(
-            @RequestHeader(name = "Authorization") String token,@PathVariable double price)
+    public ResponseEntity<?> getCustomerCouponsByPrice
+            (@RequestHeader(name = "Authorization") String token,@PathVariable double price)
             throws CustomerException, LoginException {
-        //return new ResponseEntity<>(customerService.getCustomerCouponByPrice(price), HttpStatus.ACCEPTED);
         String type = jwt.getClientType(token);
         if (type.equals(ClientType.CUSTOMER.getName())) {
             customerService.setCustomerId(jwt.getId(token));
@@ -97,7 +93,9 @@ public class CustomerController {
     }
 
     @GetMapping("/Details")
-    public ResponseEntity<?> customerDetails(@RequestHeader(name = "Authorization") String token) throws CustomerException, LoginException {
+    public ResponseEntity<?> customerDetails
+            (@RequestHeader(name = "Authorization") String token)
+            throws CustomerException, LoginException {
         String type = jwt.getClientType(token);
         if (type.equals(ClientType.CUSTOMER.getName())) {
             customerService.setCustomerId(jwt.getId(token));
