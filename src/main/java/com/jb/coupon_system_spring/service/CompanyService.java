@@ -51,8 +51,10 @@ public class CompanyService implements CompanyServiceInterface {
     @Override
     public void deleteCoupon(int couponId) throws CompanyExceptions {
         if (couponRepo.existsById(couponId)) {
-            couponRepo.deleteCouponPurchase(couponId);
-            couponRepo.deleteById(couponId);
+            if (couponRepo.getById(couponId).getCompanyId()==this.companyId) {
+                couponRepo.deleteCouponPurchase(couponId);
+                couponRepo.deleteById(couponId);
+            }
         } else {
             throw new CompanyExceptions(ErrorTypes.COUPON_NOT_EXIST.getMessage());
         }

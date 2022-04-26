@@ -8,10 +8,14 @@ import com.jb.coupon_system_spring.exceptions.CompanyExceptions;
 import com.jb.coupon_system_spring.exceptions.LoginException;
 import com.jb.coupon_system_spring.service.CompanyService;
 import com.jb.coupon_system_spring.util.JWT;
+import io.swagger.annotations.Authorization;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/company")
@@ -37,20 +41,48 @@ public class CompanyController {
 
     @PostMapping("/addCoupon")
     @ResponseStatus(HttpStatus.CREATED)
-    public void addNewCoupon(@RequestBody Coupon coupon){
-        companyService.addCoupon(coupon);
+    public ResponseEntity<?> addNewCoupon(@RequestHeader(name = "Authorization")String token, @RequestBody Coupon coupon) throws LoginException {
+        String type = jwt.getClientType(token);
+        if (type.equals(ClientType.COMPANY.getName())){
+            companyService.setCompanyId(jwt.getId(token));
+            Map<String,Object> newToken = new HashMap<>();
+            newToken.put("Authorization",jwt.checkUser(token));
+            companyService.addCoupon(coupon);
+            return ResponseEntity.ok(newToken);
+        }else {
+            throw new LoginException(ErrorTypes.UNAUTHORIZED_USER.getMessage());
+        }
+
     }
 
     @PutMapping("/updateCoupon")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public void updateCoupon(@RequestBody Coupon coupon) throws CompanyExceptions {
-        companyService.updateCoupon(coupon);
+    public ResponseEntity<?> updateCoupon(@RequestHeader(name = "Authorization") String token, @RequestBody Coupon coupon) throws CompanyExceptions, LoginException {
+        String type = jwt.getClientType(token);
+        if (type.equals(ClientType.COMPANY.getName())){
+            companyService.setCompanyId(jwt.getId(token));
+            Map<String,Object> newToken = new HashMap<>();
+            newToken.put("Authorization",jwt.checkUser(token));
+            companyService.updateCoupon(coupon);
+            return ResponseEntity.ok(newToken);
+        }else {
+            throw new LoginException(ErrorTypes.UNAUTHORIZED_USER.getMessage());
+        }
     }
 
     @DeleteMapping("/deleteCoupon/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public void deleteCoupon(@PathVariable int id) throws CompanyExceptions {
-        companyService.deleteCoupon(id);
+    public ResponseEntity<?> deleteCoupon(@RequestHeader(name = "Authorization")String token,@PathVariable int id) throws CompanyExceptions, LoginException {
+        String type = jwt.getClientType(token);
+        if (type.equals(ClientType.COMPANY.getName())){
+            companyService.setCompanyId(jwt.getId(token));
+            Map<String,Object> newToken = new HashMap<>();
+            newToken.put("Authorization",jwt.checkUser(token));
+            companyService.deleteCoupon(id);
+            return ResponseEntity.ok(newToken);
+        }else {
+            throw new LoginException(ErrorTypes.UNAUTHORIZED_USER.getMessage());
+        }
     }
 
     @GetMapping("/allCoupons")
