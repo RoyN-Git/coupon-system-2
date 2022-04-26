@@ -3,6 +3,7 @@ package com.jb.coupon_system_spring.util;
 import com.jb.coupon_system_spring.beans.ClientType;
 import com.jb.coupon_system_spring.beans.Company;
 import com.jb.coupon_system_spring.beans.Customer;
+import com.jb.coupon_system_spring.beans.ErrorTypes;
 import com.jb.coupon_system_spring.exceptions.LoginException;
 import io.jsonwebtoken.*;
 import org.springframework.stereotype.Service;
@@ -71,7 +72,7 @@ public class JWT {
             customer.setEmail(claims.getSubject());
             return generateToken(customer);
         } else {
-            throw new LoginException("unauthorized user");
+            throw new LoginException(ErrorTypes.UNAUTHORIZED_USER.getMessage());
         }
     }
 
