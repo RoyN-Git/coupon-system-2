@@ -3,14 +3,13 @@ package com.jb.coupon_system_spring.clr.saharTest;
 import com.jb.coupon_system_spring.beans.Category;
 import com.jb.coupon_system_spring.beans.Company;
 import com.jb.coupon_system_spring.beans.Coupon;
-import com.jb.coupon_system_spring.exceptions.CompanyExceptions;
+import com.jb.coupon_system_spring.exceptions.CompanyException;
 import com.jb.coupon_system_spring.service.AdminService;
 import com.jb.coupon_system_spring.service.CompanyService;
 import com.jb.coupon_system_spring.util.TablePrinter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
-import org.springframework.stereotype.Component;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -28,7 +27,7 @@ public class CompanyTest implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         Company company = adminService.getCompanyById(1);
-        companyService.setCompanyId(company.getId());
+        companyService.setId(company.getId());
         addCoupons(company);
         updateCoupon();
         deleteCoupon();
@@ -58,13 +57,13 @@ public class CompanyTest implements CommandLineRunner {
 
     }
 
-    public void updateCoupon() throws CompanyExceptions {
+    public void updateCoupon() throws CompanyException {
         Coupon coupon =companyService.allCompanyCoupons().get(0);
         coupon.setPrice(33);
         companyService.updateCoupon(coupon);
     }
 
-    public void deleteCoupon() throws CompanyExceptions {
+    public void deleteCoupon() throws CompanyException {
         companyService.deleteCoupon(2);
     }
 
@@ -86,7 +85,7 @@ public class CompanyTest implements CommandLineRunner {
 //        }
     }
 
-    public void exceptions() throws CompanyExceptions {
+    public void exceptions() throws CompanyException {
 //        companyService.deleteCoupon(9);  // todo: take care of the exception
         TablePrinter.print(companyService.companyDetails()); // problem with the company id
 

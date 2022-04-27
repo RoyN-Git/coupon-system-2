@@ -1,6 +1,5 @@
 package com.jb.coupon_system_spring.advice;
 
-import com.jb.coupon_system_spring.exceptions.CompanyExceptions;
 import com.jb.coupon_system_spring.exceptions.CouponException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;

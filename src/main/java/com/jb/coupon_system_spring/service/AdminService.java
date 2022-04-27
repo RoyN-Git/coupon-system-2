@@ -1,27 +1,25 @@
 package com.jb.coupon_system_spring.service;
 
 import com.jb.coupon_system_spring.beans.Company;
-import com.jb.coupon_system_spring.beans.Coupon;
 import com.jb.coupon_system_spring.beans.Customer;
 import com.jb.coupon_system_spring.beans.ErrorTypes;
 import com.jb.coupon_system_spring.exceptions.AdminException;
-import com.jb.coupon_system_spring.exceptions.CompanyExceptions;
-import com.jb.coupon_system_spring.repository.CompanyRepo;
-import com.jb.coupon_system_spring.repository.CouponRepo;
-import com.jb.coupon_system_spring.repository.CustomerRepo;
+import com.jb.coupon_system_spring.service.interfaces.AdminServiceInterface;
 import com.jb.coupon_system_spring.util.DataEnc;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class AdminService implements AdminServiceInterface {
-    private final CompanyRepo companyRepo;
-    private final CustomerRepo customerRepo;
-    private final CouponRepo couponRepo;
+@Setter
+@Getter
+public class AdminService extends ClientService implements AdminServiceInterface {
 
 
     @Override
@@ -33,7 +31,7 @@ public class AdminService implements AdminServiceInterface {
     @Override
     public void updateCompany(Company company) throws AdminException {
         if (companyRepo.existsById(company.getId())) {
-            if(!companyRepo.findById(company.getId()).get().getName().equals(company.getName())){
+            if (!companyRepo.findById(company.getId()).get().getName().equals(company.getName())) {
                 throw new AdminException(ErrorTypes.UNCHANGED_VALUE.getMessage());
             }
             company.setPassword(DataEnc.setEncryptor(company.getPassword()));
@@ -45,13 +43,11 @@ public class AdminService implements AdminServiceInterface {
 
     @Override
     public void deleteCompany(int companyId) throws AdminException {
+        //todo:make it better
+        couponRepo.deleteCouponPurchaseByCompanyId(companyId);
         if (companyRepo.existsById(companyId)) {
-            for (Coupon coupon : getCompanyById(companyId).getCoupons()) {
-                couponRepo.deleteCouponPurchase(coupon.getId());
-                couponRepo.deleteById(coupon.getId());
-            }
             companyRepo.deleteById(companyId);
-        } else {
+        }else {
             throw new AdminException(ErrorTypes.COMPANY_NOT_EXIST.getMessage());
         }
     }

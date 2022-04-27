@@ -1,9 +1,8 @@
-package com.jb.coupon_system_spring.service;
+package com.jb.coupon_system_spring.service.interfaces;
 
 import com.jb.coupon_system_spring.beans.Company;
 import com.jb.coupon_system_spring.beans.Customer;
 import com.jb.coupon_system_spring.exceptions.AdminException;
-import com.jb.coupon_system_spring.exceptions.CompanyExceptions;
 
 import java.util.List;
 
