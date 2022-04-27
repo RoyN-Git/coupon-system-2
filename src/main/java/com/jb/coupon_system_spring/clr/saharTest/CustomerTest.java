@@ -17,7 +17,7 @@ public class CustomerTest implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        customerService.setCustomerId(adminService.getCustomerById(1).getId());
+        customerService.setId(adminService.getCustomerById(1).getId());
         purchase();
     }
 

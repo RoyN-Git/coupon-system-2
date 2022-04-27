@@ -4,16 +4,12 @@ import com.jb.coupon_system_spring.beans.Category;
 import com.jb.coupon_system_spring.beans.Company;
 import com.jb.coupon_system_spring.beans.Coupon;
 import com.jb.coupon_system_spring.beans.ErrorTypes;
-import com.jb.coupon_system_spring.exceptions.CompanyExceptions;
-import com.jb.coupon_system_spring.repository.CompanyRepo;
-import com.jb.coupon_system_spring.repository.CouponRepo;
-import com.jb.coupon_system_spring.repository.CustomerRepo;
+import com.jb.coupon_system_spring.exceptions.CompanyException;
+import com.jb.coupon_system_spring.service.interfaces.CompanyServiceInterface;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.yaml.snakeyaml.constructor.SafeConstructor;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,78 +18,92 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Setter
 @Getter
-public class CompanyService implements CompanyServiceInterface {
+public class CompanyService extends ClientService implements CompanyServiceInterface {
 
-    private final CompanyRepo companyRepo;
-    private final CouponRepo couponRepo;
-    private int companyId;// todo: take care
+
+    //private int companyId;
 
 
     @Override
     public void addCoupon(Coupon coupon) {
+        //todo: how to add coupon only to the current company
         couponRepo.save(coupon);
     }
 
     @Override
-    public void updateCoupon(Coupon coupon) throws CompanyExceptions {
-        if (companyRepo.existsById(coupon.getCompanyId())) {
-            if (couponRepo.existsById(coupon.getId())) {
+    public void updateCoupon(Coupon coupon) throws CompanyException {
+//        if (companyRepo.existsById(coupon.getCompanyId())) {
+//            if (couponRepo.existsById(coupon.getId())) {
+//                couponRepo.save(coupon);
+//            } else {
+//                throw new CompanyExceptions(ErrorTypes.COUPON_NOT_EXIST.getMessage());
+//            }
+//        } else {
+//            throw new CompanyExceptions(ErrorTypes.COMPANY_NOT_EXIST.getMessage());
+//        }
+        if(couponRepo.existsById(coupon.getId())){
+            if(!companyRepo.existsById(coupon.getId())){
+                throw new CompanyException(ErrorTypes.COMPANY_NOT_EXIST.getMessage());
+            } else if (coupon.getCompanyId()!=this.clientId) {
+                throw new CompanyException(ErrorTypes.UNCHANGED_VALUE.getMessage());
+            }else {
                 couponRepo.save(coupon);
-            } else {
-                throw new CompanyExceptions(ErrorTypes.COUPON_NOT_EXIST.getMessage());
             }
-        } else {
-            throw new CompanyExceptions(ErrorTypes.COMPANY_NOT_EXIST.getMessage());
+        }else{
+            throw new CompanyException(ErrorTypes.COUPON_NOT_EXIST.getMessage());
         }
 
     }
 
     @Override
-    public void deleteCoupon(int couponId) throws CompanyExceptions {
+    public void deleteCoupon(int couponId) throws CompanyException {
         if (couponRepo.existsById(couponId)) {
-            if (couponRepo.getById(couponId).getCompanyId()==this.companyId) {
+            if (couponRepo.getById(couponId).getCompanyId() == this.clientId) {
                 couponRepo.deleteCouponPurchase(couponId);
                 couponRepo.deleteById(couponId);
+            } else {
+                throw new CompanyException(ErrorTypes.UNAUTHORIZED_USER.getMessage());
             }
         } else {
-            throw new CompanyExceptions(ErrorTypes.COUPON_NOT_EXIST.getMessage());
+            throw new CompanyException(ErrorTypes.COUPON_NOT_EXIST.getMessage());
         }
     }
 
     @Override
-    public List<Coupon> allCompanyCoupons() throws CompanyExceptions {
-        if (companyRepo.existsById(companyId)) {
-            return couponRepo.findByCompanyId(this.companyId);
+    public List<Coupon> allCompanyCoupons() throws CompanyException {
+        if (companyRepo.existsById(this.clientId)) {
+            return couponRepo.findByCompanyId(this.clientId);
         } else {
-            throw new CompanyExceptions(ErrorTypes.COMPANY_NOT_EXIST.getMessage());
+            throw new CompanyException(ErrorTypes.COMPANY_NOT_EXIST.getMessage());
         }
     }
 
     @Override
-    public List<Coupon> allCompanyCouponsByCategory(Category category) throws CompanyExceptions {
-        if (companyRepo.existsById(companyId)) {
-            return couponRepo.findByCompanyIdAndCategory(this.companyId, category);
+    public List<Coupon> allCompanyCouponsByCategory(Category category) throws CompanyException {
+        if (companyRepo.existsById(this.clientId)) {
+            return couponRepo.findByCompanyIdAndCategory(this.clientId, category);
         } else {
-            throw new CompanyExceptions(ErrorTypes.COMPANY_NOT_EXIST.getMessage());
+            throw new CompanyException(ErrorTypes.COMPANY_NOT_EXIST.getMessage());
         }
     }
 
     @Override
-    public List<Coupon> allCompanyCouponsByPrice(double price) throws CompanyExceptions {
-        if (companyRepo.existsById(companyId)) {
-            return couponRepo.findByCompanyIdAndPriceLessThanEqual(this.companyId, price);
+    public List<Coupon> allCompanyCouponsByPrice(double price) throws CompanyException {
+        if (companyRepo.existsById(this.clientId)) {
+            return couponRepo.findByCompanyIdAndPriceLessThanEqual(this.clientId, price);
         } else {
-            throw new CompanyExceptions(ErrorTypes.COMPANY_NOT_EXIST.getMessage());
+            throw new CompanyException(ErrorTypes.COMPANY_NOT_EXIST.getMessage());
         }
     }
 
     @Override
-    public Company companyDetails() throws CompanyExceptions {
-        Optional<Company> company = companyRepo.findById(this.companyId);
+    public Company companyDetails() throws CompanyException {
+//        Optional<Company> company = companyRepo.findById(this.companyId);
+        Optional<Company> company = companyRepo.findById(this.clientId);
         if (company.isPresent()) {
             return company.get();
         } else {
-            throw new CompanyExceptions(ErrorTypes.COMPANY_NOT_EXIST.getMessage());
+            throw new CompanyException(ErrorTypes.COMPANY_NOT_EXIST.getMessage());
         }
     }
 }

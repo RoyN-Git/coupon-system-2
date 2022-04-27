@@ -1,4 +1,4 @@
-package com.jb.coupon_system_spring.service;
+package com.jb.coupon_system_spring.service.interfaces;
 
 import com.jb.coupon_system_spring.beans.Category;
 import com.jb.coupon_system_spring.beans.Coupon;
