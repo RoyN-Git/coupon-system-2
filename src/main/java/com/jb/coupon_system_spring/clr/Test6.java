@@ -28,7 +28,7 @@ public class Test6 implements CommandLineRunner {
         List<Coupon> couponList;
 
         companyService.addCoupon(Coupon.builder()
-                .companyId(companyService.getCompanyId())
+                .companyId(companyService.getId())
                 .category(Category.HOME)
                 .amount(100)
                 .description("check")

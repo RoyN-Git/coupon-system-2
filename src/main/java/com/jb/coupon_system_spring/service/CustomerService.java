@@ -6,9 +6,7 @@ import com.jb.coupon_system_spring.beans.Customer;
 import com.jb.coupon_system_spring.beans.ErrorTypes;
 import com.jb.coupon_system_spring.exceptions.CouponException;
 import com.jb.coupon_system_spring.exceptions.CustomerException;
-import com.jb.coupon_system_spring.repository.CompanyRepo;
-import com.jb.coupon_system_spring.repository.CouponRepo;
-import com.jb.coupon_system_spring.repository.CustomerRepo;
+import com.jb.coupon_system_spring.service.interfaces.CustomerServiceInterFace;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -23,12 +21,9 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Setter
 @Getter
-public class CustomerService implements CustomerServiceInterFace {
-    private final CompanyRepo companyRepo;
-    private final CustomerRepo customerRepo;
-    private final CouponRepo couponRepo;
+public class CustomerService extends ClientService implements CustomerServiceInterFace {
 
-    private int customerId;
+    //private int customerId;
 
 
     @Override
@@ -41,7 +36,7 @@ public class CustomerService implements CustomerServiceInterFace {
             if (coupon.get().getEndDate().before(new Date(System.currentTimeMillis()))) {
                 throw new CouponException(ErrorTypes.COUPON_EXPIRED.getMessage());
             }
-            couponRepo.addCouponPurchase(customerId, coupon.get().getId());
+            couponRepo.addCouponPurchase(this.clientId, coupon.get().getId());
             coupon.get().setAmount(coupon.get().getAmount() - 1);
             couponRepo.save(coupon.get());
 
@@ -53,8 +48,8 @@ public class CustomerService implements CustomerServiceInterFace {
 
     @Override
     public List<Coupon> getCustomerCoupon() throws CustomerException {
-        if (customerRepo.existsById(customerId)) {
-            return couponRepo.findCouponsByCustomerId(customerId);
+        if (customerRepo.existsById(this.clientId)) {
+            return couponRepo.findCouponsByCustomerId(this.clientId);
         } else {
             throw new CustomerException(ErrorTypes.CUSTOMER_NOT_EXIST.getMessage());
         }
@@ -62,7 +57,8 @@ public class CustomerService implements CustomerServiceInterFace {
 
     @Override
     public List<Coupon> getCustomerCouponByCategory(Category category) throws CustomerException {
-        //return couponRepo.findCouponsByCustomerIdAndCategory(customerId,category);
+//        return couponRepo.findCouponsByCustomerIdAndCategory(category, customerId);
+        //todo: find a way to do it through query, maybe we need to create a class
         return getCustomerCoupon().stream()
                 .filter(coupon -> coupon.getCategory().equals(category))
                 .collect(Collectors.toList());
@@ -70,8 +66,8 @@ public class CustomerService implements CustomerServiceInterFace {
 
     @Override
     public List<Coupon> getCustomerCouponByPrice(double price) throws CustomerException {
-        if (customerRepo.existsById(customerId)) {
-            return couponRepo.findCouponsByCustomerIdUpToPrice(customerId, price);
+        if (customerRepo.existsById(this.clientId)) {
+            return couponRepo.findCouponsByCustomerIdUpToPrice(this.clientId, price);
         } else {
             throw new CustomerException(ErrorTypes.CUSTOMER_NOT_EXIST.getMessage());
         }
@@ -79,7 +75,7 @@ public class CustomerService implements CustomerServiceInterFace {
 
     @Override
     public Customer getCustomerDetails() throws CustomerException {
-        Optional<Customer> customer = customerRepo.findById(this.customerId);
+        Optional<Customer> customer = customerRepo.findById(this.clientId);
         if (customer.isPresent()) {
             return customer.get();
         } else {

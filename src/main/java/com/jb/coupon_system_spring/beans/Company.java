@@ -27,7 +27,6 @@ public class Company {
     private String password;
     @Singular("coupon")
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name="company_id")
     private List<Coupon> coupons = new ArrayList<>();
 }

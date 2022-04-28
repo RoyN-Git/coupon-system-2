@@ -37,5 +37,5 @@ public class Customer {
     @OnDelete(action = OnDeleteAction.CASCADE)
     List<Coupon> coupons = new ArrayList<>();
 
-    public void setId(int id) {}
+
 }

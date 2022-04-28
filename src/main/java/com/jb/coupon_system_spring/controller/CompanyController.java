@@ -4,12 +4,11 @@ import com.jb.coupon_system_spring.beans.Category;
 import com.jb.coupon_system_spring.beans.ClientType;
 import com.jb.coupon_system_spring.beans.Coupon;
 import com.jb.coupon_system_spring.beans.ErrorTypes;
-import com.jb.coupon_system_spring.exceptions.CompanyExceptions;
+import com.jb.coupon_system_spring.exceptions.CompanyException;
 import com.jb.coupon_system_spring.exceptions.LoginException;
 import com.jb.coupon_system_spring.service.CompanyService;
 import com.jb.coupon_system_spring.util.JWT;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,57 +18,80 @@ import org.springframework.web.bind.annotation.*;
 public class CompanyController {
     private final CompanyService companyService;
     private final JWT jwt;
+    private final ClientType clientType=ClientType.COMPANY;
 
     @GetMapping("/Details")
-    public ResponseEntity<?> companyDetails(@RequestHeader(name = "Authorization") String token) throws CompanyExceptions, LoginException {
-        String type= jwt.getClientType(token);
-        if(type.equals(ClientType.COMPANY.getName())) {
-            //return new ResponseEntity<>(companyService.companyDetails(), HttpStatus.OK);
-            companyService.setCompanyId(jwt.getId(token));
-            String newToken = jwt.checkUser(token);
-            return ResponseEntity.ok()
-                    .header("Authorization",newToken)
-                    .body(companyService.companyDetails());
-        }else{
-            throw new LoginException(ErrorTypes.UNAUTHORIZED_USER.getMessage());
-        }
+    public ResponseEntity<?> companyDetails
+            (@RequestHeader(name = "Authorization") String token)
+            throws CompanyException, LoginException {
+        jwt.checkClient(companyService,token,clientType);
+        return ResponseEntity.ok()
+                .header("Authorization", companyService.getToken())
+                .body(companyService.companyDetails());
     }
 
     @PostMapping("/addCoupon")
-    @ResponseStatus(HttpStatus.CREATED)
-    public void addNewCoupon(@RequestBody Coupon coupon){
+    public ResponseEntity<?> addNewCoupon
+            (@RequestHeader(name = "Authorization")String token, @RequestBody Coupon coupon)
+            throws LoginException {
+        jwt.checkClient(companyService,token,clientType);
         companyService.addCoupon(coupon);
+        return ResponseEntity.ok()
+                .header("Authorization", companyService.getToken())
+                .build();
+
     }
 
     @PutMapping("/updateCoupon")
-    @ResponseStatus(HttpStatus.ACCEPTED)
-    public void updateCoupon(@RequestBody Coupon coupon) throws CompanyExceptions {
+    public ResponseEntity<?> updateCoupon
+            (@RequestHeader(name = "Authorization") String token, @RequestBody Coupon coupon)
+            throws CompanyException, LoginException {
+        jwt.checkClient(companyService,token,clientType);
         companyService.updateCoupon(coupon);
+        return ResponseEntity.ok()
+                .header("Authorization", companyService.getToken())
+                .build();
     }
 
     @DeleteMapping("/deleteCoupon/{id}")
-    @ResponseStatus(HttpStatus.ACCEPTED)
-    public void deleteCoupon(@PathVariable int id) throws CompanyExceptions {
+    public ResponseEntity<?> deleteCoupon
+            (@RequestHeader(name = "Authorization")String token,@PathVariable int id)
+            throws CompanyException, LoginException {
+        jwt.checkClient(companyService,token,clientType);
         companyService.deleteCoupon(id);
+        return ResponseEntity.ok()
+                .header("Authorization", companyService.getToken())
+                .build();
     }
 
     @GetMapping("/allCoupons")
-    public ResponseEntity<?> allCoupons() throws CompanyExceptions {
-        return new ResponseEntity<>(companyService.allCompanyCoupons(),HttpStatus.OK);
+    public ResponseEntity<?> allCoupons
+            (@RequestHeader(name = "Authorization")String token)
+            throws CompanyException, LoginException {
+        jwt.checkClient(companyService,token,clientType);
+        return ResponseEntity.ok()
+                .header("Authorization", companyService.getToken())
+                .body(companyService.allCompanyCoupons());
     }
 
     @GetMapping("/couponsByCategory/{category}")
-    public ResponseEntity<?> couponsByCategory(@PathVariable Category category) throws CompanyExceptions {
-        return new ResponseEntity<>(companyService.allCompanyCouponsByCategory(category),HttpStatus.OK);
+    public ResponseEntity<?> couponsByCategory
+            (@RequestHeader(name = "Authorization")String token,@PathVariable Category category)
+            throws CompanyException, LoginException {
+        jwt.checkClient(companyService,token,clientType);
+        return ResponseEntity.ok()
+                .header("Authorization", companyService.getToken())
+                .body(companyService.allCompanyCouponsByCategory(category));
     }
 
     @GetMapping("/couponsByPrice/{price}")
-    public ResponseEntity<?> couponsByPrice(@PathVariable double price) throws CompanyExceptions {
-        return new ResponseEntity<>(companyService.allCompanyCouponsByPrice(price),HttpStatus.OK);
+    public ResponseEntity<?> couponsByPrice(
+            @RequestHeader(name = "Authorization")String token,@PathVariable double price)
+            throws CompanyException, LoginException {
+        jwt.checkClient(companyService,token,clientType);
+        return ResponseEntity.ok()
+                .header("Authorization", companyService.getToken())
+                .body(companyService.allCompanyCouponsByPrice(price));
     }
-
-
-
-
 
 }
