@@ -27,7 +27,7 @@ public class CompanyTest implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         Company company = adminService.getCompanyById(1);
-        companyService.setId(company.getId());
+        companyService.setClientId(company.getId());
         addCoupons(company);
         updateCoupon();
         deleteCoupon();
