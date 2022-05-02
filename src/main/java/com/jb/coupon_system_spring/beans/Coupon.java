@@ -22,7 +22,7 @@ public class Coupon {
     @Column(name = "company_id")
     private int companyId;
     @Column(name = "category_id")
-    @Enumerated(EnumType.STRING)
+    //@Enumerated(EnumType.STRING)
     private Category category;
     private String title;
     private String description;

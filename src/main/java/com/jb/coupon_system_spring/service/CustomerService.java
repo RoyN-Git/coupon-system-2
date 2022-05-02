@@ -57,11 +57,12 @@ public class CustomerService extends ClientService implements CustomerServiceInt
 
     @Override
     public List<Coupon> getCustomerCouponByCategory(Category category) throws CustomerException {
-//        return couponRepo.findCouponsByCustomerIdAndCategory(category, customerId);
+        return couponRepo.findAllByCategory(category);
+//        return couponRepo.findCouponsByCategoryAndCustomerId(category, this.clientId);
         //todo: find a way to do it through query, maybe we need to create a class
-        return getCustomerCoupon().stream()
-                .filter(coupon -> coupon.getCategory().equals(category))
-                .collect(Collectors.toList());
+//        return getCustomerCoupon().stream()
+//                .filter(coupon -> coupon.getCategory().equals(category))
+//                .collect(Collectors.toList());
     }
 
     @Override

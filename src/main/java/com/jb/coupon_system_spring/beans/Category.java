@@ -3,18 +3,18 @@ package com.jb.coupon_system_spring.beans;
 import javax.persistence.Entity;
 
 public enum Category {
-    ELECTRICITY("Electricity"),
-    GAMING("Gaming"),
-    MOBILE("Mobile"),
-    FOOD("Food"),
-    HOME("Home"),
-    FASHION("Fashion"),
-    COSMETICS("Cosmetics"),
-    PHARMACY("Pharmacy"),
-    PETS("Pets"),
-    TOURISM("Tourism"),
-    OUTDOOR("Outdoor"),
-    RESTAURANTS("Restaurants");
+    ELECTRICITY("ELECTRICITY"),
+    GAMING("GAMING"),
+    MOBILE("MOBILE"),
+    FOOD("FOOD"),
+    HOME("HOME"),
+    FASHION("FASHION"),
+    COSMETICS("COSMETICS"),
+    PHARMACY("PHARMACY"),
+    PETS("PETS"),
+    TOURISM("TOURISM"),
+    OUTDOOR("OUTDOOR"),
+    RESTAURANTS("RESTAURANTS");
 
     private String name;
     Category(String name){
