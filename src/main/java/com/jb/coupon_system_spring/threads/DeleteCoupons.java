@@ -18,9 +18,10 @@ public class DeleteCoupons {
     private final CouponRepo couponRepo;
 
     @Async
-    @Scheduled(cron="0 30 8 * * ?",zone = "Asia/Jerusalem")
+    @Scheduled(cron="20 55 12 * * ?",zone = "Asia/Jerusalem")
     public void deleteCoupons(){
-//        couponRepo.deleteCouponPurchase();
-        couponRepo.deleteByEndDateBefore(new Date(System.currentTimeMillis()));
+        Date now=new Date(System.currentTimeMillis());
+        couponRepo.deleteExpiredCouponPurchase(now);
+        couponRepo.deleteByEndDateBefore(now);
     }
 }

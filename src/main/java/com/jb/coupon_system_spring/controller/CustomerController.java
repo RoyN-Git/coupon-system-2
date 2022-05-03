@@ -22,21 +22,9 @@ public class CustomerController {
     private final ClientType clientType=ClientType.CUSTOMER;
 
     @PostMapping("/purchaseCoupon/{couponId}")
-    //@ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<?> addCouponPurchase
             (@RequestHeader(name = "Authorization") String token, @PathVariable int couponId)
             throws CouponException, LoginException {
-//        String type=jwt.getClientType(token);
-//        if(type.equals(ClientType.CUSTOMER.getName())){
-//            customerService.setCustomerId(jwt.getId(token));
-//            String newToken= jwt.checkUser(token);
-//            customerService.purchaseCoupon(couponId);
-//            return ResponseEntity.ok()
-//                    .header("Authorization", newToken)
-//                    .build();
-//        }else{
-//            throw new LoginException(ErrorTypes.UNAUTHORIZED_USER.getMessage());
-//        }
         jwt.checkClient(customerService,token,clientType);
         customerService.purchaseCoupon(couponId);
         return ResponseEntity.ok()
@@ -48,16 +36,6 @@ public class CustomerController {
     public ResponseEntity<?> getCustomerCoupons
             (@RequestHeader(name = "Authorization") String token)
             throws CustomerException, LoginException {
-//        String type = jwt.getClientType(token);
-//        if (type.equals(ClientType.CUSTOMER.getName())) {
-//            customerService.setCustomerId(jwt.getId(token));
-//            String newToken = jwt.checkUser(token);
-//            return ResponseEntity.ok()
-//                    .header("Authorization", newToken)
-//                    .body(customerService.getCustomerCoupon());
-//        } else {
-//            throw new LoginException(ErrorTypes.UNAUTHORIZED_USER.getMessage());
-//        }
         jwt.checkClient(customerService,token,clientType);
         return ResponseEntity.ok()
                 .header("Authorization", customerService.getToken())
@@ -68,16 +46,6 @@ public class CustomerController {
     public ResponseEntity<?> getCustomerCouponsByCategory
             (@RequestHeader(name = "Authorization") String token,@PathVariable Category category)
             throws CustomerException, LoginException {
-//        String type = jwt.getClientType(token);
-//        if (type.equals(ClientType.CUSTOMER.getName())) {
-//            customerService.setCustomerId(jwt.getId(token));
-//            String newToken = jwt.checkUser(token);
-//            return ResponseEntity.ok()
-//                    .header("Authorization", newToken)
-//                    .body(customerService.getCustomerCouponByCategory(category));
-//        } else {
-//            throw new LoginException(ErrorTypes.UNAUTHORIZED_USER.getMessage());
-//        }
         jwt.checkClient(customerService,token,clientType);
         return ResponseEntity.ok()
                 .header("Authorization", customerService.getToken())
@@ -88,16 +56,6 @@ public class CustomerController {
     public ResponseEntity<?> getCustomerCouponsByPrice
             (@RequestHeader(name = "Authorization") String token,@PathVariable double price)
             throws CustomerException, LoginException {
-//        String type = jwt.getClientType(token);
-//        if (type.equals(ClientType.CUSTOMER.getName())) {
-//            customerService.setCustomerId(jwt.getId(token));
-//            String newToken = jwt.checkUser(token);
-//            return ResponseEntity.ok()
-//                    .header("Authorization", newToken)
-//                    .body(customerService.getCustomerCouponByPrice(price));
-//        } else {
-//            throw new LoginException(ErrorTypes.UNAUTHORIZED_USER.getMessage());
-//        }
         jwt.checkClient(customerService,token,clientType);
         return ResponseEntity.ok()
                 .header("Authorization", customerService.getToken())
@@ -108,16 +66,6 @@ public class CustomerController {
     public ResponseEntity<?> customerDetails
             (@RequestHeader(name = "Authorization") String token)
             throws CustomerException, LoginException {
-//        String type = jwt.getClientType(token);
-//        if (type.equals(ClientType.CUSTOMER.getName())) {
-//            customerService.setCustomerId(jwt.getId(token));
-//            String newToken = jwt.checkUser(token);
-//            return ResponseEntity.ok()
-//                    .header("Authorization", newToken)
-//                    .body(customerService.getCustomerDetails());
-//        } else {
-//            throw new LoginException(ErrorTypes.UNAUTHORIZED_USER.getMessage());
-//        }
         jwt.checkClient(customerService,token,clientType);
         return ResponseEntity.ok()
                 .header("Authorization", customerService.getToken())
