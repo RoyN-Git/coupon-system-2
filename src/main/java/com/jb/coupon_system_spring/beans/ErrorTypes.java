@@ -3,6 +3,7 @@ package com.jb.coupon_system_spring.beans;
 public enum ErrorTypes {
     UNIQUE_FIELD("Value already been taken, please try again"),
     UNCHANGED_VALUE("Value cannot be changed"),
+    WRONG_COMPANY("Invalid company for the coupon, try again"),
     BAD_LOGIN("Incorrect email or password, please try again"),
     UNAUTHORIZED_USER("Unauthorized user"),
     COMPANY_NOT_EXIST("Company does not exist, please try again"),

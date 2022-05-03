@@ -33,7 +33,7 @@ public class CompanyController {
     @PostMapping("/addCoupon")
     public ResponseEntity<?> addNewCoupon
             (@RequestHeader(name = "Authorization")String token, @RequestBody Coupon coupon)
-            throws LoginException {
+            throws LoginException, CompanyException {
         jwt.checkClient(companyService,token,clientType);
         companyService.addCoupon(coupon);
         return ResponseEntity.ok()

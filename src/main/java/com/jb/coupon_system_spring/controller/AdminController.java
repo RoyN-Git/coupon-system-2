@@ -30,15 +30,6 @@ public class AdminController {
     public ResponseEntity<?> getAllCompanies
             (@RequestHeader(name = "Authorization") String token)
             throws LoginException {
-//        String type = jwt.getClientType(token);
-//        if (type.equals(ClientType.ADMIN.getName())) {
-//            String newToken = jwt.checkUser(token);
-//            return ResponseEntity.ok()
-//                    .header("Authorization", newToken)
-//                    .body(adminService.getAllCompanies());
-//        } else {
-//            throw new LoginException(ErrorTypes.UNAUTHORIZED_USER.getMessage());
-//        }
         jwt.checkClient(adminService,token,clientType);
         return ResponseEntity.ok()
                 .header("Authorization", adminService.getToken())
@@ -49,15 +40,6 @@ public class AdminController {
     public ResponseEntity<?> getAllCustomers
             (@RequestHeader(name = "Authorization") String token)
             throws LoginException {
-//        String type = jwt.getClientType(token);
-//        if (type.equals(ClientType.ADMIN.getName())) {
-//            String newToken = jwt.checkUser(token);
-//            return ResponseEntity.ok()
-//                    .header("Authorization", newToken)
-//                    .body(adminService.getAllCustomers());
-//        } else {
-//            throw new LoginException(ErrorTypes.UNAUTHORIZED_USER.getMessage());
-//        }
         jwt.checkClient(adminService,token,clientType);
         return ResponseEntity.ok()
                 .header("Authorization", adminService.getToken())
@@ -68,15 +50,6 @@ public class AdminController {
     public ResponseEntity<?> getCompanyById
             (@RequestHeader(name = "Authorization") String token, @PathVariable int id)
             throws AdminException, LoginException {
-//        String type = jwt.getClientType(token);
-//        if (type.equals(ClientType.ADMIN.getName())) {
-//            String newToken = jwt.checkUser(token);
-//            return ResponseEntity.ok()
-//                    .header("Authorization", newToken)
-//                    .body(adminService.getCompanyById(id));
-//        } else {
-//            throw new LoginException(ErrorTypes.UNAUTHORIZED_USER.getMessage());
-//        }
         jwt.checkClient(adminService,token,clientType);
         return ResponseEntity.ok()
                 .header("Authorization", adminService.getToken())
@@ -87,15 +60,6 @@ public class AdminController {
     public ResponseEntity<?> getCustomerById
             (@RequestHeader(name = "Authorization") String token, @PathVariable int id)
             throws AdminException, LoginException {
-//        String type = jwt.getClientType(token);
-//        if (type.equals(ClientType.ADMIN.getName())) {
-//            String newToken = jwt.checkUser(token);
-//            return ResponseEntity.ok()
-//                    .header("Authorization", newToken)
-//                    .body(adminService.getCustomerById(id));
-//        } else {
-//            throw new LoginException(ErrorTypes.UNAUTHORIZED_USER.getMessage());
-//        }
         jwt.checkClient(adminService,token,clientType);
         return ResponseEntity.ok()
                 .header("Authorization", adminService.getToken())
@@ -107,16 +71,6 @@ public class AdminController {
     public ResponseEntity<?> addCompany
             (@RequestHeader(name = "Authorization") String token, @RequestBody Company company)
             throws LoginException {
-//        String type = jwt.getClientType(token);
-//        if (type.equals(ClientType.ADMIN.getName())) {
-//            String newToken = jwt.checkUser(token);
-//            adminService.addCompany(company);
-//            return ResponseEntity.ok()
-//                    .header("Authorization", newToken)
-//                    .build();
-//        } else {
-//            throw new LoginException(ErrorTypes.UNAUTHORIZED_USER.getMessage());
-//        }
         jwt.checkClient(adminService,token,clientType);
         adminService.addCompany(company);
         return ResponseEntity.ok()
@@ -130,16 +84,6 @@ public class AdminController {
     public ResponseEntity<?> addCustomer
             (@RequestHeader(name = "Authorization") String token, @RequestBody Customer customer)
             throws LoginException {
-//        String type = jwt.getClientType(token);
-//        if (type.equals(ClientType.ADMIN.getName())) {
-//            String newToken = jwt.checkUser(token);
-//            adminService.addCustomer(customer);
-//            return ResponseEntity.ok()
-//                    .header("Authorization", newToken)
-//                    .build();
-//        } else {
-//            throw new LoginException(ErrorTypes.UNAUTHORIZED_USER.getMessage());
-//        }
         jwt.checkClient(adminService,token,clientType);
         adminService.addCustomer(customer);
         return ResponseEntity.ok()
@@ -151,16 +95,6 @@ public class AdminController {
     public ResponseEntity<?> updateCompany
             (@RequestHeader(name = "Authorization") String token, @RequestBody Company company)
             throws AdminException, LoginException {
-//        String type = jwt.getClientType(token);
-//        if (type.equals(ClientType.ADMIN.getName())) {
-//            String newToken = jwt.checkUser(token);
-//            adminService.updateCompany(company);
-//            return ResponseEntity.ok()
-//                    .header("Authorization", newToken)
-//                    .build();
-//        } else {
-//            throw new LoginException(ErrorTypes.UNAUTHORIZED_USER.getMessage());
-//        }
         jwt.checkClient(adminService,token,clientType);
         adminService.updateCompany(company);
         return ResponseEntity.ok()
@@ -173,16 +107,6 @@ public class AdminController {
     public ResponseEntity<?> updateCustomer
             (@RequestHeader(name = "Authorization") String token, @RequestBody Customer customer)
             throws AdminException, LoginException {
-//        String type = jwt.getClientType(token);
-//        if (type.equals(ClientType.ADMIN.getName())) {
-//            String newToken = jwt.checkUser(token);
-//            adminService.updateCustomer(customer);
-//            return ResponseEntity.ok()
-//                    .header("Authorization", newToken)
-//                    .build();
-//        } else {
-//            throw new LoginException(ErrorTypes.UNAUTHORIZED_USER.getMessage());
-//        }
         jwt.checkClient(adminService,token,clientType);
         adminService.updateCustomer(customer);
         return ResponseEntity.ok()
@@ -194,16 +118,6 @@ public class AdminController {
     public ResponseEntity<?> deleteCompany
             (@RequestHeader(name = "Authorization") String token, @PathVariable int id)
             throws AdminException, LoginException {
-//        String type = jwt.getClientType(token);
-//        if (type.equals(ClientType.ADMIN.getName())) {
-//            String newToken = jwt.checkUser(token);
-//            adminService.deleteCompany(id);
-//            return ResponseEntity.ok()
-//                    .header("Authorization", newToken)
-//                    .build();
-//        } else {
-//            throw new LoginException(ErrorTypes.UNAUTHORIZED_USER.getMessage());
-//        }
         jwt.checkClient(adminService,token,clientType);
         adminService.deleteCompany(id);
         return ResponseEntity.ok()
@@ -215,16 +129,6 @@ public class AdminController {
     public ResponseEntity<?> deleteCustomer
             (@RequestHeader(name = "Authorization") String token, @PathVariable int id)
             throws AdminException, LoginException {
-//        String type = jwt.getClientType(token);
-//        if (type.equals(ClientType.ADMIN.getName())) {
-//            String newToken = jwt.checkUser(token);
-//            adminService.deleteCustomer(id);
-//            return ResponseEntity.ok()
-//                    .header("Authorization", newToken)
-//                    .build();
-//        } else {
-//            throw new LoginException(ErrorTypes.UNAUTHORIZED_USER.getMessage());
-//        }
         jwt.checkClient(adminService,token,clientType);
         adminService.deleteCustomer(id);
         return ResponseEntity.ok()

@@ -5,6 +5,7 @@ import com.jb.coupon_system_spring.beans.Coupon;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
@@ -29,29 +30,13 @@ public interface CouponRepo extends JpaRepository<Coupon, Integer> {
             nativeQuery = true)
     List<Coupon> findCouponsByCustomerId(int customerId);
 
-    //    not working
-
     @Query(value = "SELECT coupons.*" +
             " FROM coupons, customers_vs_coupons" +
-            " WHERE coupons.category_id=?1 " +
-            " AND customers_vs_coupons.customer_id=?2" +
+            " WHERE coupons.category_id=:#{#category?.name()} " +
+            " AND customers_vs_coupons.customer_id=:customerId" +
             " AND coupons.id=customers_vs_coupons.coupon_id",
             nativeQuery = true)
-//    @Query(value = "SELECT *" +
-//            " FROM coupons" +
-//            " WHERE category_id=?1 AND id IN" +
-//            " (SELECT coupon_id" +
-//            " FROM customers_vs_coupons" +
-//            " WHERE customer_id=?2)",
-//            nativeQuery = true)
-        //todo: find a way to make it work via query
-//    @Query(value = " SELECT * FROM coupons " +
-//            "INNER JOIN customers_vs_coupons " +
-//            "ON coupons.id =customers_vs_coupons.coupon_id " +
-//            "WHERE customers_vs_coupons.customer_id=?1 " +
-//            "AND category_id=?2",
-//            nativeQuery = true)
-    List<Coupon> findCouponsByCategoryAndCustomerId(Category category, int customerId);
+    List<Coupon> findCouponsByCategoryAndCustomerId(@Param("category") Category category, @Param("customerId") int customerId);
 
     @Query(value = "SELECT coupons.*" +
             " FROM coupons, customers_vs_coupons" +
@@ -60,9 +45,6 @@ public interface CouponRepo extends JpaRepository<Coupon, Integer> {
             " AND coupons.id=customers_vs_coupons.coupon_id",
             nativeQuery = true)
     List<Coupon> findCouponsByCustomerIdUpToPrice(int customerId, double price);
-
-    List<Coupon> findAllByCategory(Category category);
-
 
     @Transactional
     @Modifying
@@ -86,9 +68,18 @@ public interface CouponRepo extends JpaRepository<Coupon, Integer> {
             nativeQuery = true)
     void deleteByEndDateBefore(Date date);
 
-//    @Transactional
-//    @Modifying
-//    @Query(value = "DELETE FROM customer_vs_coupons WHERE customer_id<>0 AND INNER JOIN coupons ON coupons_id=coupons.id")
+    @Transactional
+    @Modifying
+    @Query(value = "DELETE FROM customers_vs_coupons" +
+            " WHERE customer_id<>0" +
+            " AND coupon_id IN (SELECT id" +
+            " FROM coupons" +
+            " WHERE end_date<=?1)",
+            nativeQuery = true)
+    void deleteExpiredCouponPurchase(Date date);
 
-
+    @Query(value = "SELECT count(*) FROM customers_vs_coupons" +
+            " WHERE customer_id=?1 AND coupon_id=?2",
+            nativeQuery = true)
+    int isCouponPurchased(int customerId, int couponId);
 }

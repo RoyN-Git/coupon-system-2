@@ -51,7 +51,7 @@ public class CompanyTest implements CommandLineRunner {
                     .endDate(new Date(System.currentTimeMillis()+(int)(Math.random()*7+1)*ONE_DAY))
                     .image("image")
                     .build();
-            companyService.addCoupon(coupon);
+            //companyService.addCoupon(coupon);
             //companies.get(counter).addCoupon(coupon);
         }
 
