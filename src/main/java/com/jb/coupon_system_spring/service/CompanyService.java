@@ -25,9 +25,21 @@ public class CompanyService extends ClientService implements CompanyServiceInter
 
 
     @Override
-    public void addCoupon(Coupon coupon) {
+    public void addCoupon(Coupon coupon) throws CompanyException {
         //todo: how to add coupon only to the current company
+//        if(coupon.getCompanyId()==this.clientId) {
+//            couponRepo.save(coupon);
+//        }else {
+//            throw new CompanyException(ErrorTypes.WRONG_COMPANY.getMessage());
+//        }
+        if(!companyRepo.existsById(coupon.getCompanyId())){
+            throw new CompanyException(ErrorTypes.COMPANY_NOT_EXIST.getMessage());
+        }
+        if(coupon.getCompanyId()!=this.clientId){
+            throw new CompanyException(ErrorTypes.WRONG_COMPANY.getMessage());
+        }
         couponRepo.save(coupon);
+
     }
 
     @Override

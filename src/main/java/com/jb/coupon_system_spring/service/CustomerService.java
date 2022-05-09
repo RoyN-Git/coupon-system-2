@@ -13,6 +13,7 @@ import lombok.Setter;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -36,6 +37,9 @@ public class CustomerService extends ClientService implements CustomerServiceInt
             if (coupon.get().getEndDate().before(new Date(System.currentTimeMillis()))) {
                 throw new CouponException(ErrorTypes.COUPON_EXPIRED.getMessage());
             }
+            if(couponRepo.isCouponPurchased(this.clientId,couponId)==1){
+                throw new CouponException(ErrorTypes.COUPON_PURCHASED.getMessage());
+            }
             couponRepo.addCouponPurchase(this.clientId, coupon.get().getId());
             coupon.get().setAmount(coupon.get().getAmount() - 1);
             couponRepo.save(coupon.get());
@@ -57,11 +61,11 @@ public class CustomerService extends ClientService implements CustomerServiceInt
 
     @Override
     public List<Coupon> getCustomerCouponByCategory(Category category) throws CustomerException {
-//        return couponRepo.findCouponsByCustomerIdAndCategory(category, customerId);
-        //todo: find a way to do it through query, maybe we need to create a class
-        return getCustomerCoupon().stream()
-                .filter(coupon -> coupon.getCategory().equals(category))
-                .collect(Collectors.toList());
+        if(customerRepo.existsById(this.clientId)) {
+            return couponRepo.findCouponsByCategoryAndCustomerId(category, this.clientId);
+        }else {
+            throw new CustomerException(ErrorTypes.CUSTOMER_NOT_EXIST.getMessage());
+        }
     }
 
     @Override

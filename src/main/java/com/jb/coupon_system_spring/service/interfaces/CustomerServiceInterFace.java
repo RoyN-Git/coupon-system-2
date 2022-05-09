@@ -6,6 +6,7 @@ import com.jb.coupon_system_spring.beans.Customer;
 import com.jb.coupon_system_spring.exceptions.CouponException;
 import com.jb.coupon_system_spring.exceptions.CustomerException;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 import java.util.Optional;
 

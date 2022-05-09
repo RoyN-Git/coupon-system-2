@@ -27,7 +27,7 @@ public class CompanyTest implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         Company company = adminService.getCompanyById(1);
-        companyService.setId(company.getId());
+        companyService.setClientId(company.getId());
         addCoupons(company);
         updateCoupon();
         deleteCoupon();
@@ -51,7 +51,7 @@ public class CompanyTest implements CommandLineRunner {
                     .endDate(new Date(System.currentTimeMillis()+(int)(Math.random()*7+1)*ONE_DAY))
                     .image("image")
                     .build();
-            companyService.addCoupon(coupon);
+            //companyService.addCoupon(coupon);
             //companies.get(counter).addCoupon(coupon);
         }
 
